@@ -1,5 +1,5 @@
 {
-  "name": "centralindex-js",
+  "name": "centralindex",
   "version": "0.0.0",
   "description": "Central Index, the world's local data exchange",
   "main": "centralindex.js",
