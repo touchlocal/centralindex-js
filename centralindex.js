@@ -9,7 +9,11 @@ var apiUrl = "http://api.centralindex.com/v1/";
 var doCurl = function(url, data, callback) {
   data.api_key=apiKey;
   request( { url: url, qs: data }, function (error, response, body) {
-    callback(error,JSON.parse(body));
+    try {
+      body = JSON.parse(body);
+    } catch (e) {
+    }
+    callback(error, body);
   });
 }
 
@@ -45,8 +49,16 @@ var searchWhatByLocation = function(country, what, where, per_page, page, langua
   });
 }
 
+// get docs
+var toolsDocs = function(object, format, callback) {
+  doCurl(apiUrl+'tools/docs', { object:object, format:format }, function(error,body) {
+    callback(error,body);
+  });
+}
+
 module.exports = {
   setAPIKey: setAPIKey,
   getEntity: getEntity,
-  searchWhatByLocation: searchWhatByLocation
+  searchWhatByLocation: searchWhatByLocation,
+  toolsDocs: toolsDocs
 }

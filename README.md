@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The centralindex Node.js module is a NPM module that allows Node.js developers to start using the Central Index API with minimal code. The Central Index is global data exchange, with a simple REST/JSON api. 
+The centralindex Node.js module is an NPM module that allows Node.js developers to start using the [Central Index](http://centralindex.com/) API with minimal code. The Central Index is a global data exchange, with a simple REST/JSON api. 
 
 ## What do I need before I start?
 
@@ -39,4 +39,4 @@ Then your first script could look something like:
   
 ```
 
-You'll find further examples in the "examples" subdirectory.
+You'll find further examples in the "[examples](https://github.com/touchlocal/centralindex-js/tree/master/examples)" subdirectory.
