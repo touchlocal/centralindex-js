@@ -40,3 +40,20 @@ Then your first script could look something like:
 ```
 
 You'll find further examples in the "[examples](https://github.com/touchlocal/centralindex-js/tree/master/examples)" subdirectory.
+
+## Function reference
+
+* getEntity = function(entity_id, callback) 
+* searchWhatByLocation = function(country, what, where, per_page, page, language, callback)
+* searchWhat = function(country, what, per_page, page, language, callback) 
+* searchWhoByLocation = function(country, who, where, per_page, page, language, callback) 
+* searchWho = function(country, who, per_page, page, language, callback)
+* searchAdvertisers = function(country, tag, where, limit, language, callback)
+* entityAdd = function(language, callback)
+* entityReport = function(entity_id, gen_id, language, callback)
+* autocompleteCategory = function(str, language, callback)
+* autocompleteLocation = function(str, country, callback)
+* toolsDocs = function(object, format, callback) 
+
+See the [API Docs](http://developer.centralindex.com/docs/read/API_Reference) for more information.
+
