@@ -1,0 +1,20 @@
+{
+  "name": "centralindex-js",
+  "version": "0.0.0",
+  "description": "Central Index, the world's local data exchange",
+  "main": "centralindex.js",
+  "repository": "https://github.com/touchlocal/centralindex-js.git",
+  "keywords": [
+    "business",
+    "data",
+    "central",
+    "index",
+    "search",
+    "api"
+  ],
+  "author": "Glynn Bird",
+  "license": "BSD",
+  "dependencies": {
+    "request": "2.12.0"
+  }
+}
