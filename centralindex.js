@@ -25,7 +25,28 @@ var getEntity = function(entity_id, callback) {
   });
 }
 
+// fetch entity by id
+var searchWhatByLocation = function(country, what, where, per_page, page, language, callback) {
+  var param =  { country: country,
+                what: what,
+                where: where
+               };
+  if(per_page) {
+    param.per_page = per_page;
+  }
+  if(page) {
+    param.page = page;
+  }
+  if(language) {
+    param.language = language;
+  }
+  doCurl(apiUrl+'entity/search/what/bylocation', param, function(error,body) {
+    callback(error,body);
+  });
+}
+
 module.exports = {
   setAPIKey: setAPIKey,
-  getEntity: getEntity
+  getEntity: getEntity,
+  searchWhatByLocation: searchWhatByLocation
 }
