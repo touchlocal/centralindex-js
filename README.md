@@ -44,16 +44,16 @@ You'll find further examples in the "[examples](https://github.com/touchlocal/ce
 ## Function reference
 
 * getEntity = function(entity_id, callback) 
-* searchWhatByLocation = function(country, what, where, per_page, page, language, callback)
-* searchWhat = function(country, what, per_page, page, language, callback) 
-* searchWhoByLocation = function(country, who, where, per_page, page, language, callback) 
-* searchWho = function(country, who, per_page, page, language, callback)
-* searchAdvertisers = function(country, tag, where, limit, language, callback)
-* entityAdd = function(language, callback)
-* entityReport = function(entity_id, gen_id, language, callback)
-* autocompleteCategory = function(str, language, callback)
-* autocompleteLocation = function(str, country, callback)
-* toolsDocs = function(object, format, callback) 
+* getEntitySearchWhatBylocation = function(what, where, per_page, page, country, language, callback)
+* getEntitySearchWhat = function(what, per_page, page, country, language, callback) 
+* getEntitySearchWhoBylocation = function(who, where, per_page, page, country, callback) 
+* getEntitySearchWho = function(who, per_page, page, country, callback)
+* getEntityAdvertisers = function(tag, where, limit, country, language, callback)
+* getEntityAdd = function(language, callback)
+* getEntityReport = function(entity_id, gen_id, language, callback)
+* getAutocompleteCategory = function(str, language, callback)
+* getAutocompleteLocation = function(str, country, callback)
+* getToolsDocs = function(object, format, callback) 
 
 See the [API Docs](http://developer.centralindex.com/docs/read/API_Reference) for more information.
 
