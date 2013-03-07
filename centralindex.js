@@ -1365,6 +1365,25 @@
 
 
   /**
+   * Format an address according to the rules of the country supplied
+   *
+   *  @param address - The address to format
+   *  @param country - The country where the address is based
+   *  @return - the data from the api
+  */
+  var getToolsFormatAddress = function (address, country, callback) {
+
+    params = {};
+    params.address = address;
+    params.country = country;
+    
+    doCurl("/tools/format/address",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an invoice_address object can be updated.
    *
    *  @param entity_id
@@ -2631,6 +2650,7 @@
     getToolsIodocs: getToolsIodocs,
     getToolsDocs: getToolsDocs,
     getToolsFormatPhone: getToolsFormatPhone,
+    getToolsFormatAddress: getToolsFormatAddress,
     postEntityInvoice_address: postEntityInvoice_address,
     deleteEntityInvoice_address: deleteEntityInvoice_address,
     postEntityTag: postEntityTag,
