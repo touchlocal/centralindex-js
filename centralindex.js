@@ -233,14 +233,14 @@
   /**
    * Search for matching entities
    *
-   *  @param what
-   *  @param latitude_1
-   *  @param longitude_1
-   *  @param latitude_2
-   *  @param longitude_2
+   *  @param what - What to get results for. E.g. Plumber e.g. plumber
+   *  @param latitude_1 - Latitude of first point in bounding box e.g. 53.396842
+   *  @param longitude_1 - Longitude of first point in bounding box e.g. -6.37619
+   *  @param latitude_2 - Latitude of second point in bounding box e.g. 53.290463
+   *  @param longitude_2 - Longitude of second point in bounding box e.g. -6.207275
    *  @param per_page
    *  @param page
-   *  @param country
+   *  @param country - A valid ISO 3166 country code e.g. ie
    *  @param language
    *  @return - the data from the api
   */
@@ -712,6 +712,54 @@
     params.portal_name = portal_name;
     
     doCurl("/entity/add",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows the removal or insertion of tags into an advertiser object
+   *
+   *  @param gen_id - The gen_id of this advertiser
+   *  @param entity_id - The entity_id of the advertiser
+   *  @param language - The tag language to alter
+   *  @param tags_to_add - The tags to add
+   *  @param tags_to_remove - The tags to remove
+   *  @return - the data from the api
+  */
+  var postEntityAdvertiserTag = function (gen_id, entity_id, language, tags_to_add, tags_to_remove, callback) {
+
+    params = {};
+    params.gen_id = gen_id;
+    params.entity_id = entity_id;
+    params.language = language;
+    params.tags_to_add = tags_to_add;
+    params.tags_to_remove = tags_to_remove;
+    
+    doCurl("/entity/advertiser/tag",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows the removal or insertion of locations into an advertiser object
+   *
+   *  @param gen_id - The gen_id of this advertiser
+   *  @param entity_id - The entity_id of the advertiser
+   *  @param locations_to_add - The locations to add
+   *  @param locations_to_remove - The locations to remove
+   *  @return - the data from the api
+  */
+  var postEntityAdvertiserLocation = function (gen_id, entity_id, locations_to_add, locations_to_remove, callback) {
+
+    params = {};
+    params.gen_id = gen_id;
+    params.entity_id = entity_id;
+    params.locations_to_add = locations_to_add;
+    params.locations_to_remove = locations_to_remove;
+    
+    doCurl("/entity/advertiser/location",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1279,13 +1327,27 @@
   /**
    * Supply an address to geocode - returns lat/lon and accuracy
    *
-   *  @param address
+   *  @param address1
+   *  @param address2
+   *  @param address3
+   *  @param district
+   *  @param town
+   *  @param county
+   *  @param postcode
+   *  @param country
    *  @return - the data from the api
   */
-  var getToolsGeocode = function (address, callback) {
+  var getToolsGeocode = function (address1, address2, address3, district, town, county, postcode, country, callback) {
 
     params = {};
-    params.address = address;
+    params.address1 = address1;
+    params.address2 = address2;
+    params.address3 = address3;
+    params.district = district;
+    params.town = town;
+    params.county = county;
+    params.postcode = postcode;
+    params.country = country;
     
     doCurl("/tools/geocode",params,function(error,body){
       callback(error,body);
@@ -1505,9 +1567,12 @@
    *  @param expiry
    *  @param is_national
    *  @param language
+   *  @param reseller_ref
+   *  @param reseller_agent_id
+   *  @param publisher_id
    *  @return - the data from the api
   */
-  var postEntityAdvertiser = function (entity_id, tags, locations, expiry, is_national, language, callback) {
+  var postEntityAdvertiser = function (entity_id, tags, locations, expiry, is_national, language, reseller_ref, reseller_agent_id, publisher_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
@@ -1516,6 +1581,9 @@
     params.expiry = expiry;
     params.is_national = is_national;
     params.language = language;
+    params.reseller_ref = reseller_ref;
+    params.reseller_agent_id = reseller_agent_id;
+    params.publisher_id = publisher_id;
     
     doCurl("/entity/advertiser",params,function(error,body){
       callback(error,body);
@@ -2268,7 +2336,7 @@
 
 
   /**
-   * The search matches a category name or synonym on a given string and language.
+   * The search matches a category name on a given string and language.
    *
    *  @param str - A string to search against, E.g. Plumbers e.g. but
    *  @param language - An ISO compatible language code, E.g. en e.g. en
@@ -2281,6 +2349,25 @@
     params.language = language;
     
     doCurl("/autocomplete/category",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * The search matches a category name or synonym on a given string and language.
+   *
+   *  @param str - A string to search against, E.g. Plumbers e.g. but
+   *  @param language - An ISO compatible language code, E.g. en e.g. en
+   *  @return - the data from the api
+  */
+  var getAutocompleteKeyword = function (str, language, callback) {
+
+    params = {};
+    params.str = str;
+    params.language = language;
+    
+    doCurl("/autocomplete/keyword",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2577,6 +2664,99 @@
   }
 
 
+  /**
+   * Update/Add a publisher
+   *
+   *  @param publisher_id
+   *  @param country
+   *  @param name
+   *  @param description
+   *  @param active
+   *  @return - the data from the api
+  */
+  var postPublisher = function (publisher_id, country, name, description, active, callback) {
+
+    params = {};
+    params.publisher_id = publisher_id;
+    params.country = country;
+    params.name = name;
+    params.description = description;
+    params.active = active;
+    
+    doCurl("/publisher",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Delete a publisher with a specified publisher_id
+   *
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  var deletePublisher = function (publisher_id, callback) {
+
+    params = {};
+    params.publisher_id = publisher_id;
+    
+    doCurl("/publisher",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Returns publisher that matches a given publisher id
+   *
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  var getPublisher = function (publisher_id, callback) {
+
+    params = {};
+    params.publisher_id = publisher_id;
+    
+    doCurl("/publisher",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Returns publisher that matches a given publisher id
+   *
+   *  @param country
+   *  @return - the data from the api
+  */
+  var getPublisherByCountry = function (country, callback) {
+
+    params = {};
+    params.country = country;
+    
+    doCurl("/publisher/byCountry",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Returns publishers that are available for a given entity_id.
+   *
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  var getPublisherByEntityId = function (entity_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    
+    doCurl("/publisher/byEntityId",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
   module.exports = {
     setApiKey: setApiKey,
     getStatus: getStatus,
@@ -2609,6 +2789,8 @@
     postEntityMigrate_category: postEntityMigrate_category,
     putBusiness: putBusiness,
     getEntityAdd: getEntityAdd,
+    postEntityAdvertiserTag: postEntityAdvertiserTag,
+    postEntityAdvertiserLocation: postEntityAdvertiserLocation,
     getLookupLocation: getLookupLocation,
     getLookupCategory: getLookupCategory,
     getLookupLegacyCategory: getLookupLegacyCategory,
@@ -2682,6 +2864,7 @@
     getUser: getUser,
     getUserBy_social_media: getUserBy_social_media,
     getAutocompleteCategory: getAutocompleteCategory,
+    getAutocompleteKeyword: getAutocompleteKeyword,
     getAutocompleteLocation: getAutocompleteLocation,
     putQueue: putQueue,
     deleteQueue: deleteQueue,
@@ -2696,5 +2879,10 @@
     postTransactionCancelled: postTransactionCancelled,
     getTransaction: getTransaction,
     getTransactionBy_paypal_transaction_id: getTransactionBy_paypal_transaction_id,
-    postEntityClaim: postEntityClaim
+    postEntityClaim: postEntityClaim,
+    postPublisher: postPublisher,
+    deletePublisher: deletePublisher,
+    getPublisher: getPublisher,
+    getPublisherByCountry: getPublisherByCountry,
+    getPublisherByEntityId: getPublisherByEntityId
   }
