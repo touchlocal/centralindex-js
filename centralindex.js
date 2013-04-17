@@ -113,6 +113,23 @@ Starting Wolf using 'dev' configuration
 
 
   /**
+   * Uploads a JSON file of known format and bulk inserts into DB
+   *
+   *  @param data
+   *  @return - the data from the api
+  */
+  var postEntityBulkJson = function (data, callback) {
+
+    params = {};
+    params.data = data;
+    
+    doCurl("/entity/bulk/json",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Shows the current status of a bulk upload
    *
    *  @param upload_id
@@ -124,6 +141,23 @@ Starting Wolf using 'dev' configuration
     params.upload_id = upload_id;
     
     doCurl("/entity/bulk/csv/status",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Shows the current status of a bulk JSON upload
+   *
+   *  @param upload_id
+   *  @return - the data from the api
+  */
+  var getEntityBulkJsonStatus = function (upload_id, callback) {
+
+    params = {};
+    params.upload_id = upload_id;
+    
+    doCurl("/entity/bulk/json/status",params,function(error,body){
       callback(error,body);
     })
   }
@@ -669,10 +703,10 @@ Starting Wolf using 'dev' configuration
    *  @param email
    *  @param website
    *  @param category_id
-   *  @param category_name
+   *  @param category_type
    *  @return - the data from the api
   */
-  var putBusiness = function (name, address1, address2, address3, district, town, county, postcode, country, latitude, longitude, timezone, telephone_number, email, website, category_id, category_name, callback) {
+  var putBusiness = function (name, address1, address2, address3, district, town, county, postcode, country, latitude, longitude, timezone, telephone_number, email, website, category_id, category_type, callback) {
 
     params = {};
     params.name = name;
@@ -691,7 +725,7 @@ Starting Wolf using 'dev' configuration
     params.email = email;
     params.website = website;
     params.category_id = category_id;
-    params.category_name = category_name;
+    params.category_type = category_type;
     
     doCurl("/business",params,function(error,body){
       callback(error,body);
@@ -719,19 +753,19 @@ Starting Wolf using 'dev' configuration
 
 
   /**
-   * Provides a personalised URL to redirect a user to claim an entity in the Central Index
+   * Provides a personalised URL to redirect a user to claim an entity on Central Index
    *
-   *  @param language - The language to use to render the add path e.g. en
-   *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
-   *  @param entity_id - The id of the index card that is being claimed e.g. 379236808425472
+   *  @param entity_id - Entity ID to be claimed e.g. 380348266819584
+   *  @param language - The language to use to render the claim path e.g. en
+   *  @param portal_name - The name of the website that entity is being claimed on e.g. YourLocal
    *  @return - the data from the api
   */
-  var getEntityClaim = function (language, portal_name, entity_id, callback) {
+  var getEntityClaim = function (entity_id, language, portal_name, callback) {
 
     params = {};
+    params.entity_id = entity_id;
     params.language = language;
     params.portal_name = portal_name;
-    params.entity_id = entity_id;
     
     doCurl("/entity/claim",params,function(error,body){
       callback(error,body);
@@ -1130,19 +1164,36 @@ Starting Wolf using 'dev' configuration
 
 
   /**
+   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
+   *
+   *  @param category_id
+   *  @return - the data from the api
+  */
+  var getCategory = function (category_id, callback) {
+
+    params = {};
+    params.category_id = category_id;
+    
+    doCurl("/category",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
    *  @param category_id
-   *  @param category_name
+   *  @param category_type
    *  @return - the data from the api
   */
-  var postEntityCategory = function (entity_id, category_id, category_name, callback) {
+  var postEntityCategory = function (entity_id, category_id, category_type, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.category_id = category_id;
-    params.category_name = category_name;
+    params.category_type = category_type;
     
     doCurl("/entity/category",params,function(error,body){
       callback(error,body);
@@ -1199,17 +1250,19 @@ Starting Wolf using 'dev' configuration
    *  @param company_name
    *  @param latitude
    *  @param longitude
+   *  @param country
    *  @param name_strictness
    *  @param location_strictness
    *  @return - the data from the api
   */
-  var getMatchByphone = function (phone, company_name, latitude, longitude, name_strictness, location_strictness, callback) {
+  var getMatchByphone = function (phone, company_name, latitude, longitude, country, name_strictness, location_strictness, callback) {
 
     params = {};
     params.phone = phone;
     params.company_name = company_name;
     params.latitude = latitude;
     params.longitude = longitude;
+    params.country = country;
     params.name_strictness = name_strictness;
     params.location_strictness = location_strictness;
     
@@ -2847,13 +2900,59 @@ Starting Wolf using 'dev' configuration
   }
 
 
+  /**
+   * For insance, reporting a phone number as wrong
+   *
+   *  @param entity_id - A valid entity_id e.g. 379236608286720
+   *  @param gen_id - The gen_id for the item being reported
+   *  @param signal_type - The signal that is to be reported e.g. wrong
+   *  @param data_type - The type of data being reported
+   *  @return - the data from the api
+  */
+  var postSignal = function (entity_id, gen_id, signal_type, data_type, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    params.signal_type = signal_type;
+    params.data_type = data_type;
+    
+    doCurl("/signal",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Get the number of times an entity has been served out as an advert or on serps/bdp pages
+   *
+   *  @param entity_id - A valid entity_id e.g. 379236608286720
+   *  @param year - The year to report on
+   *  @param month - The month to report on
+   *  @return - the data from the api
+  */
+  var getStatsEntityBy_date = function (entity_id, year, month, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.year = year;
+    params.month = month;
+    
+    doCurl("/stats/entity/by_date",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
   module.exports = {
     setApiKey: setApiKey,
     getStatus: getStatus,
     getLogo: getLogo,
     putLogo: putLogo,
     postEntityBulkCsv: postEntityBulkCsv,
+    postEntityBulkJson: postEntityBulkJson,
     getEntityBulkCsvStatus: getEntityBulkCsvStatus,
+    getEntityBulkJsonStatus: getEntityBulkJsonStatus,
     putEntity: putEntity,
     getEntityBy_supplier_id: getEntityBy_supplier_id,
     getEntitySearch: getEntitySearch,
@@ -2898,6 +2997,7 @@ Starting Wolf using 'dev' configuration
     postCategorySynonym: postCategorySynonym,
     deleteCategorySynonym: deleteCategorySynonym,
     postCategoryMerge: postCategoryMerge,
+    getCategory: getCategory,
     postEntityCategory: postEntityCategory,
     deleteEntityCategory: deleteEntityCategory,
     postEntityGeopoint: postEntityGeopoint,
@@ -2977,5 +3077,7 @@ Starting Wolf using 'dev' configuration
     getPublisherByCountry: getPublisherByCountry,
     getPublisherByEntityId: getPublisherByEntityId,
     postCountry: postCountry,
-    getCountry: getCountry
+    getCountry: getCountry,
+    postSignal: postSignal,
+    getStatsEntityBy_date: getStatsEntityBy_date
   }
