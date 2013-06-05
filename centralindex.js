@@ -626,44 +626,6 @@ Starting Wolf using 'dev' configuration
 
 
   /**
-   * Supply an entity and an object within it (e.g. a phone number), and retrieve a URL that allows the user to report an issue with that object
-   *
-   *  @param entity_id - The unique Entity ID e.g. 379236608286720
-   *  @param portal_name - The name of the portal that the user is coming from e.g. YourLocal
-   *  @param language
-   *  @return - the data from the api
-  */
-  var getEntityReport = function (entity_id, portal_name, language, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.portal_name = portal_name;
-    params.language = language;
-    
-    doCurl("/entity/report",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows us to identify the user, entity and element from an encoded endpoint URL's token
-   *
-   *  @param token
-   *  @return - the data from the api
-  */
-  var getToolsDecodereport = function (token, callback) {
-
-    params = {};
-    params.token = token;
-    
-    doCurl("/tools/decodereport",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Update entities that use an old category ID to a new one
    *
    *  @param from
@@ -704,9 +666,10 @@ Starting Wolf using 'dev' configuration
    *  @param website
    *  @param category_id
    *  @param category_type
+   *  @param do_not_display
    *  @return - the data from the api
   */
-  var putBusiness = function (name, address1, address2, address3, district, town, county, postcode, country, latitude, longitude, timezone, telephone_number, email, website, category_id, category_type, callback) {
+  var putBusiness = function (name, address1, address2, address3, district, town, county, postcode, country, latitude, longitude, timezone, telephone_number, email, website, category_id, category_type, do_not_display, callback) {
 
     params = {};
     params.name = name;
@@ -726,48 +689,9 @@ Starting Wolf using 'dev' configuration
     params.website = website;
     params.category_id = category_id;
     params.category_type = category_type;
+    params.do_not_display = do_not_display;
     
     doCurl("/business",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Provides a personalised URL to redirect a user to add an entity to Central Index
-   *
-   *  @param language - The language to use to render the add path e.g. en
-   *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
-   *  @return - the data from the api
-  */
-  var getEntityAdd = function (language, portal_name, callback) {
-
-    params = {};
-    params.language = language;
-    params.portal_name = portal_name;
-    
-    doCurl("/entity/add",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Provides a personalised URL to redirect a user to claim an entity on Central Index
-   *
-   *  @param entity_id - Entity ID to be claimed e.g. 380348266819584
-   *  @param language - The language to use to render the claim path e.g. en
-   *  @param portal_name - The name of the website that entity is being claimed on e.g. YourLocal
-   *  @return - the data from the api
-  */
-  var getEntityClaim = function (entity_id, language, portal_name, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.language = language;
-    params.portal_name = portal_name;
-    
-    doCurl("/entity/claim",params,function(error,body){
       callback(error,body);
     })
   }
@@ -793,29 +717,6 @@ Starting Wolf using 'dev' configuration
     params.tags_to_remove = tags_to_remove;
     
     doCurl("/entity/advertiser/tag",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows the removal or insertion of locations into an advertiser object
-   *
-   *  @param gen_id - The gen_id of this advertiser
-   *  @param entity_id - The entity_id of the advertiser
-   *  @param locations_to_add - The locations to add
-   *  @param locations_to_remove - The locations to remove
-   *  @return - the data from the api
-  */
-  var postEntityAdvertiserLocation = function (gen_id, entity_id, locations_to_add, locations_to_remove, callback) {
-
-    params = {};
-    params.gen_id = gen_id;
-    params.entity_id = entity_id;
-    params.locations_to_add = locations_to_add;
-    params.locations_to_remove = locations_to_remove;
-    
-    doCurl("/entity/advertiser/location",params,function(error,body){
       callback(error,body);
     })
   }
@@ -873,6 +774,42 @@ Starting Wolf using 'dev' configuration
     params.type = type;
     
     doCurl("/lookup/legacy/category",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Find all the parents locations of the selected location
+   *
+   *  @param location_id
+   *  @return - the data from the api
+  */
+  var getLookupLocationParents = function (location_id, callback) {
+
+    params = {};
+    params.location_id = location_id;
+    
+    doCurl("/lookup/location/parents",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Find all the child locations of the selected location
+   *
+   *  @param location_id
+   *  @param resolution
+   *  @return - the data from the api
+  */
+  var getLookupLocationChildren = function (location_id, resolution, callback) {
+
+    params = {};
+    params.location_id = location_id;
+    params.resolution = resolution;
+    
+    doCurl("/lookup/location/children",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1386,12 +1323,16 @@ Starting Wolf using 'dev' configuration
    * Spider a single url looking for key facts
    *
    *  @param url
+   *  @param pages
+   *  @param country
    *  @return - the data from the api
   */
-  var getToolsSpider = function (url, callback) {
+  var getToolsSpider = function (url, pages, country, callback) {
 
     params = {};
     params.url = url;
+    params.pages = pages;
+    params.country = country;
     
     doCurl("/tools/spider",params,function(error,body){
       callback(error,body);
@@ -1511,6 +1452,99 @@ Starting Wolf using 'dev' configuration
 
 
   /**
+   * Check to see if a supplied email address is valid
+   *
+   *  @param email_address - The email address to validate
+   *  @return - the data from the api
+  */
+  var getToolsValidate_email = function (email_address, callback) {
+
+    params = {};
+    params.email_address = email_address;
+    
+    doCurl("/tools/validate_email",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * compile the supplied less with the standard Bootstrap less into a CSS file
+   *
+   *  @param less - The LESS code to compile
+   *  @return - the data from the api
+  */
+  var getToolsLess = function (less, callback) {
+
+    params = {};
+    params.less = less;
+    
+    doCurl("/tools/less",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * replace some text parameters with some entity details
+   *
+   *  @param entity_id - The entity to pull for replacements
+   *  @param string - The string full of parameters
+   *  @return - the data from the api
+  */
+  var getToolsReplace = function (entity_id, string, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.string = string;
+    
+    doCurl("/tools/replace",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Check to see if a supplied email address is valid
+   *
+   *  @param from - The phone number from which the SMS orginates
+   *  @param to - The phone number to which the SMS is to be sent
+   *  @param message - The message to be sent in the SMS
+   *  @return - the data from the api
+  */
+  var getToolsSendsms = function (from, to, message, callback) {
+
+    params = {};
+    params.from = from;
+    params.to = to;
+    params.message = message;
+    
+    doCurl("/tools/sendsms",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Given a spreadsheet id add a row
+   *
+   *  @param spreadsheet_key - The key of the spreadsheet to edit
+   *  @param data - A comma separated list to add as cells
+   *  @return - the data from the api
+  */
+  var postToolsGooglesheetAdd_row = function (spreadsheet_key, data, callback) {
+
+    params = {};
+    params.spreadsheet_key = spreadsheet_key;
+    params.data = data;
+    
+    doCurl("/tools/googlesheet/add_row",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an invoice_address object can be updated.
    *
    *  @param entity_id
@@ -1612,9 +1646,10 @@ Starting Wolf using 'dev' configuration
    *  @param county
    *  @param postcode
    *  @param address_type
+   *  @param do_not_display
    *  @return - the data from the api
   */
-  var postEntityPostal_address = function (entity_id, address1, address2, address3, district, town, county, postcode, address_type, callback) {
+  var postEntityPostal_address = function (entity_id, address1, address2, address3, district, town, county, postcode, address_type, do_not_display, callback) {
 
     params = {};
     params.entity_id = entity_id;
@@ -1626,6 +1661,7 @@ Starting Wolf using 'dev' configuration
     params.county = county;
     params.postcode = postcode;
     params.address_type = address_type;
+    params.do_not_display = do_not_display;
     
     doCurl("/entity/postal_address",params,function(error,body){
       callback(error,body);
@@ -1639,7 +1675,9 @@ Starting Wolf using 'dev' configuration
    *  @param entity_id
    *  @param tags
    *  @param locations
-   *  @param expiry
+   *  @param max_tags
+   *  @param max_locations
+   *  @param expiry_date
    *  @param is_national
    *  @param language
    *  @param reseller_ref
@@ -1647,20 +1685,105 @@ Starting Wolf using 'dev' configuration
    *  @param publisher_id
    *  @return - the data from the api
   */
-  var postEntityAdvertiser = function (entity_id, tags, locations, expiry, is_national, language, reseller_ref, reseller_agent_id, publisher_id, callback) {
+  var postEntityAdvertiserCreate = function (entity_id, tags, locations, max_tags, max_locations, expiry_date, is_national, language, reseller_ref, reseller_agent_id, publisher_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.tags = tags;
     params.locations = locations;
-    params.expiry = expiry;
+    params.max_tags = max_tags;
+    params.max_locations = max_locations;
+    params.expiry_date = expiry_date;
     params.is_national = is_national;
     params.language = language;
     params.reseller_ref = reseller_ref;
     params.reseller_agent_id = reseller_agent_id;
     params.publisher_id = publisher_id;
     
-    doCurl("/entity/advertiser",params,function(error,body){
+    doCurl("/entity/advertiser/create",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a known entity id, an advertiser is updated
+   *
+   *  @param entity_id
+   *  @param tags
+   *  @param locations
+   *  @param extra_tags
+   *  @param extra_locations
+   *  @param is_national
+   *  @param language
+   *  @param reseller_ref
+   *  @param reseller_agent_id
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  var postEntityAdvertiserUpsell = function (entity_id, tags, locations, extra_tags, extra_locations, is_national, language, reseller_ref, reseller_agent_id, publisher_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.tags = tags;
+    params.locations = locations;
+    params.extra_tags = extra_tags;
+    params.extra_locations = extra_locations;
+    params.is_national = is_national;
+    params.language = language;
+    params.reseller_ref = reseller_ref;
+    params.reseller_agent_id = reseller_agent_id;
+    params.publisher_id = publisher_id;
+    
+    doCurl("/entity/advertiser/upsell",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Expires an advertiser from and entity
+   *
+   *  @param entity_id
+   *  @param publisher_id
+   *  @param reseller_ref
+   *  @param reseller_agent_id
+   *  @return - the data from the api
+  */
+  var postEntityAdvertiserCancel = function (entity_id, publisher_id, reseller_ref, reseller_agent_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.publisher_id = publisher_id;
+    params.reseller_ref = reseller_ref;
+    params.reseller_agent_id = reseller_agent_id;
+    
+    doCurl("/entity/advertiser/cancel",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Renews an advertiser from an entity
+   *
+   *  @param entity_id
+   *  @param expiry_date
+   *  @param publisher_id
+   *  @param reseller_ref
+   *  @param reseller_agent_id
+   *  @return - the data from the api
+  */
+  var postEntityAdvertiserRenew = function (entity_id, expiry_date, publisher_id, reseller_ref, reseller_agent_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.expiry_date = expiry_date;
+    params.publisher_id = publisher_id;
+    params.reseller_ref = reseller_ref;
+    params.reseller_agent_id = reseller_agent_id;
+    
+    doCurl("/entity/advertiser/renew",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1680,6 +1803,29 @@ Starting Wolf using 'dev' configuration
     params.gen_id = gen_id;
     
     doCurl("/entity/advertiser",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Adds/removes locations
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @param locations_to_add
+   *  @param locations_to_remove
+   *  @return - the data from the api
+  */
+  var postEntityAdvertiserLocation = function (entity_id, gen_id, locations_to_add, locations_to_remove, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    params.locations_to_add = locations_to_add;
+    params.locations_to_remove = locations_to_remove;
+    
+    doCurl("/entity/advertiser/location",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1825,6 +1971,23 @@ Starting Wolf using 'dev' configuration
 
 
   /**
+   * Read multiple locations with the supplied ID in the locations reference database.
+   *
+   *  @param location_ids
+   *  @return - the data from the api
+  */
+  var getLocationMultiple = function (location_ids, callback) {
+
+    params = {};
+    params.location_ids = location_ids;
+    
+    doCurl("/location/multiple",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Create/update a new location entity with the supplied ID in the locations reference database.
    *
    *  @param location_id
@@ -1839,9 +2002,16 @@ Starting Wolf using 'dev' configuration
    *  @param timezone
    *  @param is_duplicate
    *  @param is_default
+   *  @param parent_town
+   *  @param parent_county
+   *  @param parent_province
+   *  @param parent_region
+   *  @param parent_neighbourhood
+   *  @param parent_district
+   *  @param postalcode
    *  @return - the data from the api
   */
-  var postLocation = function (location_id, name, formal_name, latitude, longitude, resolution, country, population, description, timezone, is_duplicate, is_default, callback) {
+  var postLocation = function (location_id, name, formal_name, latitude, longitude, resolution, country, population, description, timezone, is_duplicate, is_default, parent_town, parent_county, parent_province, parent_region, parent_neighbourhood, parent_district, postalcode, callback) {
 
     params = {};
     params.location_id = location_id;
@@ -1856,6 +2026,13 @@ Starting Wolf using 'dev' configuration
     params.timezone = timezone;
     params.is_duplicate = is_duplicate;
     params.is_default = is_default;
+    params.parent_town = parent_town;
+    params.parent_county = parent_county;
+    params.parent_province = parent_province;
+    params.parent_region = parent_region;
+    params.parent_neighbourhood = parent_neighbourhood;
+    params.parent_district = parent_district;
+    params.postalcode = postalcode;
     
     doCurl("/location",params,function(error,body){
       callback(error,body);
@@ -2336,9 +2513,10 @@ Starting Wolf using 'dev' configuration
    *  @param user_type
    *  @param social_network
    *  @param social_network_id
+   *  @param reseller_admin_masheryid
    *  @return - the data from the api
   */
-  var postUser = function (email, first_name, last_name, active, trust, creation_date, user_type, social_network, social_network_id, callback) {
+  var postUser = function (email, first_name, last_name, active, trust, creation_date, user_type, social_network, social_network_id, reseller_admin_masheryid, callback) {
 
     params = {};
     params.email = email;
@@ -2350,6 +2528,7 @@ Starting Wolf using 'dev' configuration
     params.user_type = user_type;
     params.social_network = social_network;
     params.social_network_id = social_network_id;
+    params.reseller_admin_masheryid = reseller_admin_masheryid;
     
     doCurl("/user",params,function(error,body){
       callback(error,body);
@@ -2411,6 +2590,40 @@ Starting Wolf using 'dev' configuration
 
 
   /**
+   * Returns all the users that match the supplied reseller_admin_masheryid
+   *
+   *  @param reseller_admin_masheryid
+   *  @return - the data from the api
+  */
+  var getUserBy_reseller_admin_masheryid = function (reseller_admin_masheryid, callback) {
+
+    params = {};
+    params.reseller_admin_masheryid = reseller_admin_masheryid;
+    
+    doCurl("/user/by_reseller_admin_masheryid",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Removes reseller privileges from a specified user
+   *
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  var postUserReseller_remove = function (user_id, callback) {
+
+    params = {};
+    params.user_id = user_id;
+    
+    doCurl("/user/reseller_remove",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * The search matches a category name on a given string and language.
    *
    *  @param str - A string to search against, E.g. Plumbers e.g. but
@@ -2462,6 +2675,25 @@ Starting Wolf using 'dev' configuration
     params.country = country;
     
     doCurl("/autocomplete/location",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * The search matches a postcode to the supplied string
+   *
+   *  @param str - A string to search against, E.g. W1 e.g. W1
+   *  @param country - Which country to return results for. An ISO compatible country code, E.g. gb e.g. gb
+   *  @return - the data from the api
+  */
+  var getAutocompletePostcode = function (str, country, callback) {
+
+    params = {};
+    params.str = str;
+    params.country = country;
+    
+    doCurl("/autocomplete/postcode",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2724,14 +2956,18 @@ Starting Wolf using 'dev' configuration
    *  @param entity_id
    *  @param claimed_user_id
    *  @param claimed_date
+   *  @param claim_method
+   *  @param phone_number
    *  @return - the data from the api
   */
-  var postEntityClaim = function (entity_id, claimed_user_id, claimed_date, callback) {
+  var postEntityClaim = function (entity_id, claimed_user_id, claimed_date, claim_method, phone_number, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.claimed_user_id = claimed_user_id;
     params.claimed_date = claimed_date;
+    params.claim_method = claim_method;
+    params.phone_number = phone_number;
     
     doCurl("/entity/claim",params,function(error,body){
       callback(error,body);
@@ -2853,9 +3089,10 @@ Starting Wolf using 'dev' configuration
    *  @param north
    *  @param south
    *  @param claimPrice
+   *  @param claimMethods
    *  @return - the data from the api
   */
-  var postCountry = function (country_id, name, synonyms, continentName, continent, geonameId, dbpediaURL, freebaseURL, population, currencyCode, languages, areaInSqKm, capital, east, west, north, south, claimPrice, callback) {
+  var postCountry = function (country_id, name, synonyms, continentName, continent, geonameId, dbpediaURL, freebaseURL, population, currencyCode, languages, areaInSqKm, capital, east, west, north, south, claimPrice, claimMethods, callback) {
 
     params = {};
     params.country_id = country_id;
@@ -2876,6 +3113,7 @@ Starting Wolf using 'dev' configuration
     params.north = north;
     params.south = south;
     params.claimPrice = claimPrice;
+    params.claimMethods = claimMethods;
     
     doCurl("/country",params,function(error,body){
       callback(error,body);
@@ -2950,21 +3188,29 @@ Starting Wolf using 'dev' configuration
    *  @param traction_id
    *  @param trigger_type
    *  @param action_type
+   *  @param country
    *  @param email_addresses
    *  @param title
    *  @param body
+   *  @param api_method
+   *  @param api_url
+   *  @param api_params
    *  @param active
    *  @return - the data from the api
   */
-  var postTraction = function (traction_id, trigger_type, action_type, email_addresses, title, body, active, callback) {
+  var postTraction = function (traction_id, trigger_type, action_type, country, email_addresses, title, body, api_method, api_url, api_params, active, callback) {
 
     params = {};
     params.traction_id = traction_id;
     params.trigger_type = trigger_type;
     params.action_type = action_type;
+    params.country = country;
     params.email_addresses = email_addresses;
     params.title = title;
     params.body = body;
+    params.api_method = api_method;
+    params.api_url = api_url;
+    params.api_params = api_params;
     params.active = active;
     
     doCurl("/traction",params,function(error,body){
@@ -3022,6 +3268,688 @@ Starting Wolf using 'dev' configuration
   }
 
 
+  /**
+   * Update/Add a message
+   *
+   *  @param message_id - Message id to pull
+   *  @param ses_id - Aamazon email id
+   *  @param from_user_id - User sending the message
+   *  @param from_email - Sent from email address
+   *  @param to_entity_id - The id of the entity being sent the message
+   *  @param to_email - Sent from email address
+   *  @param subject - Subject for the message
+   *  @param body - Body for the message
+   *  @param bounced - If the message bounced
+   *  @return - the data from the api
+  */
+  var postMessage = function (message_id, ses_id, from_user_id, from_email, to_entity_id, to_email, subject, body, bounced, callback) {
+
+    params = {};
+    params.message_id = message_id;
+    params.ses_id = ses_id;
+    params.from_user_id = from_user_id;
+    params.from_email = from_email;
+    params.to_entity_id = to_entity_id;
+    params.to_email = to_email;
+    params.subject = subject;
+    params.body = body;
+    params.bounced = bounced;
+    
+    doCurl("/message",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Fetching a message
+   *
+   *  @param message_id - The message id to pull the message for
+   *  @return - the data from the api
+  */
+  var getMessage = function (message_id, callback) {
+
+    params = {};
+    params.message_id = message_id;
+    
+    doCurl("/message",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Fetching messages by ses_id
+   *
+   *  @param ses_id - The amazon id to pull the message for
+   *  @return - the data from the api
+  */
+  var getMessageBy_ses_id = function (ses_id, callback) {
+
+    params = {};
+    params.ses_id = ses_id;
+    
+    doCurl("/message/by_ses_id",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Update/Add a flatpack
+   *
+   *  @param flatpack_id - this record's unique, auto-generated id - if supplied, then this is an edit, otherwise it's an add
+   *  @param domainName - the domain name to serve this flatpack site on (no leading http:// or anything please)
+   *  @param flatpackName - the name of the Flat pack instance
+   *  @param less - the LESS configuration to use to overrides the Bootstrap CSS
+   *  @param language - the language in which to render the flatpack site
+   *  @param country - the country to use for searches etc
+   *  @param afsId - the adsense-for-search id to use for Google ads on serps
+   *  @param afcId - the adsense-for-content id to use for Google ads on bdps
+   *  @param mapsType - the type of maps to use
+   *  @param mapKey - the nokia map key to use to render maps
+   *  @param analyticsHTML - the html to insert to record page views
+   *  @param searchFormShowOn - list of pages to show the search form
+   *  @param searchFormShowKeywordsBox - whether to display the keywords box on the search form
+   *  @param searchFormShowLocationBox - whether to display the location box on search forms - not required
+   *  @param searchFormKeywordsAutoComplete - whether to do auto-completion on the keywords box on the search form
+   *  @param searchFormLocationsAutoComplete - whether to do auto-completion on the locations box on the search form
+   *  @param searchFormDefaultLocation - the string to use as the default location for searches if no location is supplied
+   *  @param searchFormPlaceholderKeywords - the string to show in the keyword box as placeholder text e.g. e.g. cafe
+   *  @param searchFormPlaceholderLocation - the string to show in the location box as placeholder text e.g. e.g. Dublin
+   *  @param searchFormKeywordsLabel - the string to show next to the keywords control e.g. I'm looking for
+   *  @param searchFormLocationLabel - the string to show next to the location control e.g. Located in
+   *  @param cannedLinksHeader - the string to show above canned searches
+   *  @param homepageTitle - the page title of site's home page
+   *  @param homepageDescription - the meta description of the home page
+   *  @param homepageIntroTitle - the introductory title for the homepage
+   *  @param homepageIntroText - the introductory text for the homepage
+   *  @param adblockHeader - the html (JS) to render an advert
+   *  @param adblock728x90 - the html (JS) to render a 728x90 advert
+   *  @param adblock468x60 - the html (JS) to render a 468x60 advert
+   *  @param header_menu - the JSON that describes a navigation at the top of the page
+   *  @param footer_menu - the JSON that describes a navigation at the bottom of the page
+   *  @param bdpTitle - The page title of the entity business profile pages
+   *  @param bdpDescription - The meta description of entity business profile pages
+   *  @param serpTitle - The page title of the serps
+   *  @param serpDescription - The meta description of serps
+   *  @param serpNumberResults - The number of results per search page
+   *  @param serpNumberAdverts - The number of adverts to show on the first search page
+   *  @param cookiePolicyUrl - The cookie policy url of the flatpack
+   *  @param cookiePolicyNotice - Whether to show the cookie policy on this flatpack
+   *  @param addBusinessButtonText - The text used in the 'Add your business' button
+   *  @param twitterUrl - Twitter link
+   *  @param facebookUrl - Facebook link
+   *  @return - the data from the api
+  */
+  var postFlatpack = function (flatpack_id, domainName, flatpackName, less, language, country, afsId, afcId, mapsType, mapKey, analyticsHTML, searchFormShowOn, searchFormShowKeywordsBox, searchFormShowLocationBox, searchFormKeywordsAutoComplete, searchFormLocationsAutoComplete, searchFormDefaultLocation, searchFormPlaceholderKeywords, searchFormPlaceholderLocation, searchFormKeywordsLabel, searchFormLocationLabel, cannedLinksHeader, homepageTitle, homepageDescription, homepageIntroTitle, homepageIntroText, adblockHeader, adblock728x90, adblock468x60, header_menu, footer_menu, bdpTitle, bdpDescription, serpTitle, serpDescription, serpNumberResults, serpNumberAdverts, cookiePolicyUrl, cookiePolicyNotice, addBusinessButtonText, twitterUrl, facebookUrl, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    params.domainName = domainName;
+    params.flatpackName = flatpackName;
+    params.less = less;
+    params.language = language;
+    params.country = country;
+    params.afsId = afsId;
+    params.afcId = afcId;
+    params.mapsType = mapsType;
+    params.mapKey = mapKey;
+    params.analyticsHTML = analyticsHTML;
+    params.searchFormShowOn = searchFormShowOn;
+    params.searchFormShowKeywordsBox = searchFormShowKeywordsBox;
+    params.searchFormShowLocationBox = searchFormShowLocationBox;
+    params.searchFormKeywordsAutoComplete = searchFormKeywordsAutoComplete;
+    params.searchFormLocationsAutoComplete = searchFormLocationsAutoComplete;
+    params.searchFormDefaultLocation = searchFormDefaultLocation;
+    params.searchFormPlaceholderKeywords = searchFormPlaceholderKeywords;
+    params.searchFormPlaceholderLocation = searchFormPlaceholderLocation;
+    params.searchFormKeywordsLabel = searchFormKeywordsLabel;
+    params.searchFormLocationLabel = searchFormLocationLabel;
+    params.cannedLinksHeader = cannedLinksHeader;
+    params.homepageTitle = homepageTitle;
+    params.homepageDescription = homepageDescription;
+    params.homepageIntroTitle = homepageIntroTitle;
+    params.homepageIntroText = homepageIntroText;
+    params.adblockHeader = adblockHeader;
+    params.adblock728x90 = adblock728x90;
+    params.adblock468x60 = adblock468x60;
+    params.header_menu = header_menu;
+    params.footer_menu = footer_menu;
+    params.bdpTitle = bdpTitle;
+    params.bdpDescription = bdpDescription;
+    params.serpTitle = serpTitle;
+    params.serpDescription = serpDescription;
+    params.serpNumberResults = serpNumberResults;
+    params.serpNumberAdverts = serpNumberAdverts;
+    params.cookiePolicyUrl = cookiePolicyUrl;
+    params.cookiePolicyNotice = cookiePolicyNotice;
+    params.addBusinessButtonText = addBusinessButtonText;
+    params.twitterUrl = twitterUrl;
+    params.facebookUrl = facebookUrl;
+    
+    doCurl("/flatpack",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Get a flatpack
+   *
+   *  @param flatpack_id - the unique id to search for
+   *  @return - the data from the api
+  */
+  var getFlatpack = function (flatpack_id, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    
+    doCurl("/flatpack",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Get a flatpack using a domain name
+   *
+   *  @param domainName - the domain name to search for
+   *  @return - the data from the api
+  */
+  var getFlatpackBy_domain_name = function (domainName, callback) {
+
+    params = {};
+    params.domainName = domainName;
+    
+    doCurl("/flatpack/by_domain_name",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Remove a flatpack using a supplied flatpack_id
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @return - the data from the api
+  */
+  var deleteFlatpack = function (flatpack_id, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    
+    doCurl("/flatpack",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Add a canned link to an existing flatpack site.
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @param keywords - the keywords to use in the canned search
+   *  @param location - the location to use in the canned search
+   *  @param linkText - the link text to be used to in the canned search link
+   *  @return - the data from the api
+  */
+  var postFlatpackLink = function (flatpack_id, keywords, location, linkText, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    params.keywords = keywords;
+    params.location = location;
+    params.linkText = linkText;
+    
+    doCurl("/flatpack/link",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Remove a canned link to an existing flatpack site.
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @param gen_id - the id of the canned link to remove
+   *  @return - the data from the api
+  */
+  var deleteFlatpackLink = function (flatpack_id, gen_id, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/flatpack/link",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Upload a logo to serve out with this flatpack
+   *
+   *  @param flatpack_id - the id of the flatpack to update
+   *  @param filedata
+   *  @return - the data from the api
+  */
+  var postFlatpackLogo = function (flatpack_id, filedata, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    params.filedata = filedata;
+    
+    doCurl("/flatpack/logo",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Upload a file to our asset server and return the url
+   *
+   *  @param filedata
+   *  @return - the data from the api
+  */
+  var postFlatpackUpload = function (filedata, callback) {
+
+    params = {};
+    params.filedata = filedata;
+    
+    doCurl("/flatpack/upload",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Upload an icon to serve out with this flatpack
+   *
+   *  @param flatpack_id - the id of the flatpack to update
+   *  @param filedata
+   *  @return - the data from the api
+  */
+  var postFlatpackIcon = function (flatpack_id, filedata, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    params.filedata = filedata;
+    
+    doCurl("/flatpack/icon",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows us to identify the user, entity and element from an encoded endpoint URL's token
+   *
+   *  @param token
+   *  @return - the data from the api
+  */
+  var getTokenDecode = function (token, callback) {
+
+    params = {};
+    params.token = token;
+    
+    doCurl("/token/decode",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Provides a tokenised URL to redirect a user so they can add an entity to Central Index
+   *
+   *  @param language - The language to use to render the add path e.g. en
+   *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
+   *  @return - the data from the api
+  */
+  var getTokenAdd = function (language, portal_name, callback) {
+
+    params = {};
+    params.language = language;
+    params.portal_name = portal_name;
+    
+    doCurl("/token/add",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Provides a tokenised URL to redirect a user to claim an entity on Central Index
+   *
+   *  @param entity_id - Entity ID to be claimed e.g. 380348266819584
+   *  @param language - The language to use to render the claim path e.g. en
+   *  @param portal_name - The name of the website that entity is being claimed on e.g. YourLocal
+   *  @return - the data from the api
+  */
+  var getTokenClaim = function (entity_id, language, portal_name, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.language = language;
+    params.portal_name = portal_name;
+    
+    doCurl("/token/claim",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Provides a tokenised URL that allows a user to report incorrect entity information
+   *
+   *  @param entity_id - The unique Entity ID e.g. 379236608286720
+   *  @param portal_name - The name of the portal that the user is coming from e.g. YourLocal
+   *  @param language - The language to use to render the report path
+   *  @return - the data from the api
+  */
+  var getTokenReport = function (entity_id, portal_name, language, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.portal_name = portal_name;
+    params.language = language;
+    
+    doCurl("/token/report",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Fetch token for messaging path
+   *
+   *  @param entity_id - The id of the entity being messaged
+   *  @param portal_name - The name of the application that has initiated the email process, example: 'Your Local'
+   *  @param language - The language for the app
+   *  @return - the data from the api
+  */
+  var getTokenMessage = function (entity_id, portal_name, language, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.portal_name = portal_name;
+    params.language = language;
+    
+    doCurl("/token/message",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Send an email via amazon
+   *
+   *  @param to_email_address - The email address to send the email too
+   *  @param reply_email_address - The email address to add in the reply to field
+   *  @param source_account - The source account to send the email from
+   *  @param subject - The subject for the email
+   *  @param body - The body for the email
+   *  @param html_body - If the body of the email is html
+   *  @return - the data from the api
+  */
+  var postEmail = function (to_email_address, reply_email_address, source_account, subject, body, html_body, callback) {
+
+    params = {};
+    params.to_email_address = to_email_address;
+    params.reply_email_address = reply_email_address;
+    params.source_account = source_account;
+    params.subject = subject;
+    params.body = body;
+    params.html_body = html_body;
+    
+    doCurl("/email",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Log a sale
+   *
+   *  @param entity_id - The entity the sale was made against
+   *  @param action_type - The type of action we are performing
+   *  @param publisher_id - The publisher id that has made the sale
+   *  @param mashery_id - The mashery id
+   *  @param reseller_ref - The reference of the sale made by the seller
+   *  @param reseller_agent_id - The id of the agent selling the product
+   *  @param max_tags - The number of tags available to the entity
+   *  @param max_locations - The number of locations available to the entity
+   *  @param extra_tags - The extra number of tags
+   *  @param extra_locations - The extra number of locations
+   *  @param expiry_date - The date the product expires
+   *  @return - the data from the api
+  */
+  var postSales_log = function (entity_id, action_type, publisher_id, mashery_id, reseller_ref, reseller_agent_id, max_tags, max_locations, extra_tags, extra_locations, expiry_date, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.action_type = action_type;
+    params.publisher_id = publisher_id;
+    params.mashery_id = mashery_id;
+    params.reseller_ref = reseller_ref;
+    params.reseller_agent_id = reseller_agent_id;
+    params.max_tags = max_tags;
+    params.max_locations = max_locations;
+    params.extra_tags = extra_tags;
+    params.extra_locations = extra_locations;
+    params.expiry_date = expiry_date;
+    
+    doCurl("/sales_log",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Return a sales log by id
+   *
+   *  @param sales_log_id - The sales log id to pull
+   *  @return - the data from the api
+  */
+  var getSales_log = function (sales_log_id, callback) {
+
+    params = {};
+    params.sales_log_id = sales_log_id;
+    
+    doCurl("/sales_log",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a known entity id, a social media object can be added.
+   *
+   *  @param entity_id
+   *  @param type
+   *  @param website_url
+   *  @return - the data from the api
+  */
+  var postEntitySocialmedia = function (entity_id, type, website_url, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.type = type;
+    params.website_url = website_url;
+    
+    doCurl("/entity/socialmedia",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a social media object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntitySocialmedia = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/socialmedia",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a known entity id, a private object can be added.
+   *
+   *  @param entity_id - The entity to associate the private object with
+   *  @param data - The data to store
+   *  @return - the data from the api
+  */
+  var putPrivate_object = function (entity_id, data, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.data = data;
+    
+    doCurl("/private_object",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a private object to be removed
+   *
+   *  @param private_object_id - The id of the private object to remove
+   *  @return - the data from the api
+  */
+  var deletePrivate_object = function (private_object_id, callback) {
+
+    params = {};
+    params.private_object_id = private_object_id;
+    
+    doCurl("/private_object",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a private object to be returned based on the entity_id and masheryid
+   *
+   *  @param entity_id - The entity associated with the private object
+   *  @return - the data from the api
+  */
+  var getPrivate_objectAll = function (entity_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    
+    doCurl("/private_object/all",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Update/Add a Group
+   *
+   *  @param group_id
+   *  @param name
+   *  @param description
+   *  @param url
+   *  @return - the data from the api
+  */
+  var postGroup = function (group_id, name, description, url, callback) {
+
+    params = {};
+    params.group_id = group_id;
+    params.name = name;
+    params.description = description;
+    params.url = url;
+    
+    doCurl("/group",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Delete a group with a specified group_id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  var deleteGroup = function (group_id, callback) {
+
+    params = {};
+    params.group_id = group_id;
+    
+    doCurl("/group",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Returns group that matches a given group id
+   *
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  var getGroup = function (group_id, callback) {
+
+    params = {};
+    params.group_id = group_id;
+    
+    doCurl("/group",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a known entity id, a group  can be added to group members.
+   *
+   *  @param entity_id
+   *  @param group_id
+   *  @return - the data from the api
+  */
+  var postEntityGroup = function (entity_id, group_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.group_id = group_id;
+    
+    doCurl("/entity/group",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a group object to be removed from an entities group members
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityGroup = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/group",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
   module.exports = {
     setApiKey: setApiKey,
     getStatus: getStatus,
@@ -3051,17 +3979,14 @@ Starting Wolf using 'dev' configuration
     getEntityChangelog: getEntityChangelog,
     postEntityMerge: postEntityMerge,
     getToolsReindex: getToolsReindex,
-    getEntityReport: getEntityReport,
-    getToolsDecodereport: getToolsDecodereport,
     postEntityMigrate_category: postEntityMigrate_category,
     putBusiness: putBusiness,
-    getEntityAdd: getEntityAdd,
-    getEntityClaim: getEntityClaim,
     postEntityAdvertiserTag: postEntityAdvertiserTag,
-    postEntityAdvertiserLocation: postEntityAdvertiserLocation,
     getLookupLocation: getLookupLocation,
     getLookupCategory: getLookupCategory,
     getLookupLegacyCategory: getLookupLegacyCategory,
+    getLookupLocationParents: getLookupLocationParents,
+    getLookupLocationChildren: getLookupLocationChildren,
     postEntityName: postEntityName,
     postEntityBackground: postEntityBackground,
     postEntityEmployee: postEntityEmployee,
@@ -3092,13 +4017,22 @@ Starting Wolf using 'dev' configuration
     getToolsDocs: getToolsDocs,
     getToolsFormatPhone: getToolsFormatPhone,
     getToolsFormatAddress: getToolsFormatAddress,
+    getToolsValidate_email: getToolsValidate_email,
+    getToolsLess: getToolsLess,
+    getToolsReplace: getToolsReplace,
+    getToolsSendsms: getToolsSendsms,
+    postToolsGooglesheetAdd_row: postToolsGooglesheetAdd_row,
     postEntityInvoice_address: postEntityInvoice_address,
     deleteEntityInvoice_address: deleteEntityInvoice_address,
     postEntityTag: postEntityTag,
     deleteEntityTag: deleteEntityTag,
     postEntityPostal_address: postEntityPostal_address,
-    postEntityAdvertiser: postEntityAdvertiser,
+    postEntityAdvertiserCreate: postEntityAdvertiserCreate,
+    postEntityAdvertiserUpsell: postEntityAdvertiserUpsell,
+    postEntityAdvertiserCancel: postEntityAdvertiserCancel,
+    postEntityAdvertiserRenew: postEntityAdvertiserRenew,
     deleteEntityAdvertiser: deleteEntityAdvertiser,
+    postEntityAdvertiserLocation: postEntityAdvertiserLocation,
     postEntityEmail: postEntityEmail,
     deleteEntityEmail: deleteEntityEmail,
     postEntityWebsite: postEntityWebsite,
@@ -3106,6 +4040,7 @@ Starting Wolf using 'dev' configuration
     postEntityImage: postEntityImage,
     deleteEntityImage: deleteEntityImage,
     getLocation: getLocation,
+    getLocationMultiple: getLocationMultiple,
     postLocation: postLocation,
     postLocationSynonym: postLocationSynonym,
     deleteLocationSynonym: deleteLocationSynonym,
@@ -3132,9 +4067,12 @@ Starting Wolf using 'dev' configuration
     getUserBy_email: getUserBy_email,
     getUser: getUser,
     getUserBy_social_media: getUserBy_social_media,
+    getUserBy_reseller_admin_masheryid: getUserBy_reseller_admin_masheryid,
+    postUserReseller_remove: postUserReseller_remove,
     getAutocompleteCategory: getAutocompleteCategory,
     getAutocompleteKeyword: getAutocompleteKeyword,
     getAutocompleteLocation: getAutocompleteLocation,
+    getAutocompletePostcode: getAutocompletePostcode,
     putQueue: putQueue,
     deleteQueue: deleteQueue,
     getQueue: getQueue,
@@ -3161,5 +4099,35 @@ Starting Wolf using 'dev' configuration
     postTraction: postTraction,
     getTraction: getTraction,
     getTractionActive: getTractionActive,
-    deleteTraction: deleteTraction
+    deleteTraction: deleteTraction,
+    postMessage: postMessage,
+    getMessage: getMessage,
+    getMessageBy_ses_id: getMessageBy_ses_id,
+    postFlatpack: postFlatpack,
+    getFlatpack: getFlatpack,
+    getFlatpackBy_domain_name: getFlatpackBy_domain_name,
+    deleteFlatpack: deleteFlatpack,
+    postFlatpackLink: postFlatpackLink,
+    deleteFlatpackLink: deleteFlatpackLink,
+    postFlatpackLogo: postFlatpackLogo,
+    postFlatpackUpload: postFlatpackUpload,
+    postFlatpackIcon: postFlatpackIcon,
+    getTokenDecode: getTokenDecode,
+    getTokenAdd: getTokenAdd,
+    getTokenClaim: getTokenClaim,
+    getTokenReport: getTokenReport,
+    getTokenMessage: getTokenMessage,
+    postEmail: postEmail,
+    postSales_log: postSales_log,
+    getSales_log: getSales_log,
+    postEntitySocialmedia: postEntitySocialmedia,
+    deleteEntitySocialmedia: deleteEntitySocialmedia,
+    putPrivate_object: putPrivate_object,
+    deletePrivate_object: deletePrivate_object,
+    getPrivate_objectAll: getPrivate_objectAll,
+    postGroup: postGroup,
+    deleteGroup: deleteGroup,
+    getGroup: getGroup,
+    postEntityGroup: postEntityGroup,
+    deleteEntityGroup: deleteEntityGroup
   }
