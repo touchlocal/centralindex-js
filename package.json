@@ -1,6 +1,6 @@
 {
   "name": "centralindex",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Central Index, the world's local data exchange",
   "main": "centralindex.js",
   "repository": "https://github.com/touchlocal/centralindex-js.git",
