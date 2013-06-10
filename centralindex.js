@@ -3462,6 +3462,21 @@
 
 
   /**
+   * Get flatpacks that match the supplied masheryid
+   *
+   *  @return - the data from the api
+  */
+  var getFlatpackBy_masheryid = function (callback) {
+
+    params = {};
+    
+    doCurl("/flatpack/by_masheryid",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Remove a flatpack using a supplied flatpack_id
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -3669,6 +3684,25 @@
     params.language = language;
     
     doCurl("/token/message",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Fetch token for login path
+   *
+   *  @param portal_name - The name of the application that has initiated the login process, example: 'Your Local'
+   *  @param language - The language for the app
+   *  @return - the data from the api
+  */
+  var getTokenLogin = function (portal_name, language, callback) {
+
+    params = {};
+    params.portal_name = portal_name;
+    params.language = language;
+    
+    doCurl("/token/login",params,function(error,body){
       callback(error,body);
     })
   }
@@ -4099,6 +4133,7 @@
     postFlatpack: postFlatpack,
     getFlatpack: getFlatpack,
     getFlatpackBy_domain_name: getFlatpackBy_domain_name,
+    getFlatpackBy_masheryid: getFlatpackBy_masheryid,
     deleteFlatpack: deleteFlatpack,
     postFlatpackLink: postFlatpackLink,
     deleteFlatpackLink: deleteFlatpackLink,
@@ -4110,6 +4145,7 @@
     getTokenClaim: getTokenClaim,
     getTokenReport: getTokenReport,
     getTokenMessage: getTokenMessage,
+    getTokenLogin: getTokenLogin,
     postEmail: postEmail,
     postSales_log: postSales_log,
     getSales_log: getSales_log,
