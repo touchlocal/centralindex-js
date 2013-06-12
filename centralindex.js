@@ -649,7 +649,6 @@
    * Create a new business entity with all it's objects
    *
    *  @param name
-   *  @param building_number
    *  @param address1
    *  @param address2
    *  @param address3
@@ -669,11 +668,10 @@
    *  @param do_not_display
    *  @return - the data from the api
   */
-  var putBusiness = function (name, building_number, address1, address2, address3, district, town, county, postcode, country, latitude, longitude, timezone, telephone_number, email, website, category_id, category_type, do_not_display, callback) {
+  var putBusiness = function (name, address1, address2, address3, district, town, county, postcode, country, latitude, longitude, timezone, telephone_number, email, website, category_id, category_type, do_not_display, callback) {
 
     params = {};
     params.name = name;
-    params.building_number = building_number;
     params.address1 = address1;
     params.address2 = address2;
     params.address3 = address3;
@@ -1344,7 +1342,6 @@
   /**
    * Supply an address to geocode - returns lat/lon and accuracy
    *
-   *  @param building_number
    *  @param address1
    *  @param address2
    *  @param address3
@@ -1355,10 +1352,9 @@
    *  @param country
    *  @return - the data from the api
   */
-  var getToolsGeocode = function (building_number, address1, address2, address3, district, town, county, postcode, country, callback) {
+  var getToolsGeocode = function (address1, address2, address3, district, town, county, postcode, country, callback) {
 
     params = {};
-    params.building_number = building_number;
     params.address1 = address1;
     params.address2 = address2;
     params.address3 = address3;
@@ -1551,7 +1547,6 @@
    * With a known entity id, an invoice_address object can be updated.
    *
    *  @param entity_id
-   *  @param building_number
    *  @param address1
    *  @param address2
    *  @param address3
@@ -1562,11 +1557,10 @@
    *  @param address_type
    *  @return - the data from the api
   */
-  var postEntityInvoice_address = function (entity_id, building_number, address1, address2, address3, district, town, county, postcode, address_type, callback) {
+  var postEntityInvoice_address = function (entity_id, address1, address2, address3, district, town, county, postcode, address_type, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.building_number = building_number;
     params.address1 = address1;
     params.address2 = address2;
     params.address3 = address3;
@@ -1643,7 +1637,6 @@
    * Create/Update a postal address
    *
    *  @param entity_id
-   *  @param building_number
    *  @param address1
    *  @param address2
    *  @param address3
@@ -1655,11 +1648,10 @@
    *  @param do_not_display
    *  @return - the data from the api
   */
-  var postEntityPostal_address = function (entity_id, building_number, address1, address2, address3, district, town, county, postcode, address_type, do_not_display, callback) {
+  var postEntityPostal_address = function (entity_id, address1, address2, address3, district, town, county, postcode, address_type, do_not_display, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.building_number = building_number;
     params.address1 = address1;
     params.address2 = address2;
     params.address3 = address3;
@@ -3620,15 +3612,13 @@
    *
    *  @param language - The language to use to render the add path e.g. en
    *  @param portal_name - The name of the website that data is to be added on e.g. YourLocal
-   *  @param country - The country of the entity to be added e.g. gb
    *  @return - the data from the api
   */
-  var getTokenAdd = function (language, portal_name, country, callback) {
+  var getTokenAdd = function (language, portal_name, callback) {
 
     params = {};
     params.language = language;
     params.portal_name = portal_name;
-    params.country = country;
     
     doCurl("/token/add",params,function(error,body){
       callback(error,body);
@@ -3713,37 +3703,6 @@
     params.language = language;
     
     doCurl("/token/login",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Fetch token for update path
-   *
-   *  @param entity_id - The id of the entity being upgraded
-   *  @param portal_name - The name of the application that has initiated the login process, example: 'Your Local'
-   *  @param language - The language for the app
-   *  @param price - The price of the advert in the entities native currency
-   *  @param max_tags - The number of tags attached to the advert
-   *  @param max_locations - The number of locations attached to the advert
-   *  @param contract_length - The number of days from the initial sale date that the contract is valid for
-   *  @param ref_id - The campaign or reference id
-   *  @return - the data from the api
-  */
-  var getTokenUpgrade = function (entity_id, portal_name, language, price, max_tags, max_locations, contract_length, ref_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.portal_name = portal_name;
-    params.language = language;
-    params.price = price;
-    params.max_tags = max_tags;
-    params.max_locations = max_locations;
-    params.contract_length = contract_length;
-    params.ref_id = ref_id;
-    
-    doCurl("/token/upgrade",params,function(error,body){
       callback(error,body);
     })
   }
@@ -4018,27 +3977,6 @@
   }
 
 
-  /**
-   * Add an entityserve document
-   *
-   *  @param entity_id - The id of the entity to create the entityserve event for
-   *  @param country - the ISO code of the country
-   *  @param event_type - The event type being recorded
-   *  @return - the data from the api
-  */
-  var putEntityserve = function (entity_id, country, event_type, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.country = country;
-    params.event_type = event_type;
-    
-    doCurl("/entityserve",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
   module.exports = {
     setApiKey: setApiKey,
     getStatus: getStatus,
@@ -4208,7 +4146,6 @@
     getTokenReport: getTokenReport,
     getTokenMessage: getTokenMessage,
     getTokenLogin: getTokenLogin,
-    getTokenUpgrade: getTokenUpgrade,
     postEmail: postEmail,
     postSales_log: postSales_log,
     getSales_log: getSales_log,
@@ -4221,6 +4158,5 @@
     deleteGroup: deleteGroup,
     getGroup: getGroup,
     postEntityGroup: postEntityGroup,
-    deleteEntityGroup: deleteEntityGroup,
-    putEntityserve: putEntityserve
+    deleteEntityGroup: deleteEntityGroup
   }
