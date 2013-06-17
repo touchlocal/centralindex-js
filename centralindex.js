@@ -1529,6 +1529,29 @@
 
 
   /**
+   * Ring the person and verify their account
+   *
+   *  @param to - The phone number to verify
+   *  @param from - The phone number to call from
+   *  @param pin - The pin to verify the phone number with
+   *  @param language - The language to read the verification in
+   *  @return - the data from the api
+  */
+  var getToolsPhonecallVerify = function (to, from, pin, language, callback) {
+
+    params = {};
+    params.to = to;
+    params.from = from;
+    params.pin = pin;
+    params.language = language;
+    
+    doCurl("/tools/phonecall/verify",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Given a spreadsheet id add a row
    *
    *  @param spreadsheet_key - The key of the spreadsheet to edit
@@ -1833,6 +1856,25 @@
     params.locations_to_remove = locations_to_remove;
     
     doCurl("/entity/advertiser/location",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Get all advertisers that have been updated from a give date for a given reseller
+   *
+   *  @param from_date
+   *  @param country
+   *  @return - the data from the api
+  */
+  var getAdvertiserUpdated = function (from_date, country, callback) {
+
+    params = {};
+    params.from_date = from_date;
+    params.country = country;
+    
+    doCurl("/advertiser/updated",params,function(error,body){
       callback(error,body);
     })
   }
@@ -4110,6 +4152,7 @@
     getToolsLess: getToolsLess,
     getToolsReplace: getToolsReplace,
     getToolsSendsms: getToolsSendsms,
+    getToolsPhonecallVerify: getToolsPhonecallVerify,
     postToolsGooglesheetAdd_row: postToolsGooglesheetAdd_row,
     postEntityInvoice_address: postEntityInvoice_address,
     deleteEntityInvoice_address: deleteEntityInvoice_address,
@@ -4122,6 +4165,7 @@
     postEntityAdvertiserRenew: postEntityAdvertiserRenew,
     deleteEntityAdvertiser: deleteEntityAdvertiser,
     postEntityAdvertiserLocation: postEntityAdvertiserLocation,
+    getAdvertiserUpdated: getAdvertiserUpdated,
     postEntityEmail: postEntityEmail,
     deleteEntityEmail: deleteEntityEmail,
     postEntityWebsite: postEntityWebsite,
