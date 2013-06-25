@@ -351,9 +351,11 @@
    *  @param nokia_country_code
    *  @param twilio_sms
    *  @param twilio_phone
+   *  @param currency_symbol - the symbol of this country's currency
+   *  @param currency_symbol_html - the html version of the symbol of this country's currency
    *  @return - the data from the api
   */
-  var postCountry = function (country_id, name, synonyms, continentName, continent, geonameId, dbpediaURL, freebaseURL, population, currencyCode, languages, areaInSqKm, capital, east, west, north, south, claimPrice, claimMethods, nokia_country_code, twilio_sms, twilio_phone, callback) {
+  var postCountry = function (country_id, name, synonyms, continentName, continent, geonameId, dbpediaURL, freebaseURL, population, currencyCode, languages, areaInSqKm, capital, east, west, north, south, claimPrice, claimMethods, nokia_country_code, twilio_sms, twilio_phone, currency_symbol, currency_symbol_html, callback) {
 
     params = {};
     params.country_id = country_id;
@@ -378,6 +380,8 @@
     params.nokia_country_code = nokia_country_code;
     params.twilio_sms = twilio_sms;
     params.twilio_phone = twilio_phone;
+    params.currency_symbol = currency_symbol;
+    params.currency_symbol_html = currency_symbol_html;
     
     doCurl("/country",params,function(error,body){
       callback(error,body);
@@ -3850,9 +3854,11 @@
    *  @param api_url
    *  @param api_params
    *  @param active
+   *  @param reseller_masheryid
+   *  @param description
    *  @return - the data from the api
   */
-  var postTraction = function (traction_id, trigger_type, action_type, country, email_addresses, title, body, api_method, api_url, api_params, active, callback) {
+  var postTraction = function (traction_id, trigger_type, action_type, country, email_addresses, title, body, api_method, api_url, api_params, active, reseller_masheryid, description, callback) {
 
     params = {};
     params.traction_id = traction_id;
@@ -3866,6 +3872,8 @@
     params.api_url = api_url;
     params.api_params = api_params;
     params.active = active;
+    params.reseller_masheryid = reseller_masheryid;
+    params.description = description;
     
     doCurl("/traction",params,function(error,body){
       callback(error,body);
