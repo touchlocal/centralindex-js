@@ -4098,10 +4098,11 @@
    *  @param api_params
    *  @param active
    *  @param reseller_masheryid
+   *  @param publisher_masheryid
    *  @param description
    *  @return - the data from the api
   */
-  var postTraction = function (traction_id, trigger_type, action_type, country, email_addresses, title, body, api_method, api_url, api_params, active, reseller_masheryid, description, callback) {
+  var postTraction = function (traction_id, trigger_type, action_type, country, email_addresses, title, body, api_method, api_url, api_params, active, reseller_masheryid, publisher_masheryid, description, callback) {
 
     params = {};
     params.traction_id = traction_id;
@@ -4116,6 +4117,7 @@
     params.api_params = api_params;
     params.active = active;
     params.reseller_masheryid = reseller_masheryid;
+    params.publisher_masheryid = publisher_masheryid;
     params.description = description;
     
     doCurl("/traction",params,function(error,body){
