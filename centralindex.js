@@ -3487,12 +3487,14 @@
    * Perform the whole PTB process on the supplied entity
    *
    *  @param entity_id
+   *  @param destructive
    *  @return - the data from the api
   */
-  var getPtbAll = function (entity_id, callback) {
+  var getPtbAll = function (entity_id, destructive, callback) {
 
     params = {};
     params.entity_id = entity_id;
+    params.destructive = destructive;
     
     doCurl("/ptb/all",params,function(error,body){
       callback(error,body);
@@ -3526,13 +3528,15 @@
    *
    *  @param entity_id
    *  @param module
+   *  @param destructive
    *  @return - the data from the api
   */
-  var getPtbModule = function (entity_id, module, callback) {
+  var getPtbModule = function (entity_id, module, destructive, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.module = module;
+    params.destructive = destructive;
     
     doCurl("/ptb/module",params,function(error,body){
       callback(error,body);
