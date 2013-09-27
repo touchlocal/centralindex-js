@@ -2983,13 +2983,15 @@
    *
    *  @param from_date
    *  @param to_date
+   *  @param country_id
    *  @return - the data from the api
   */
-  var getHeartbeatBy_date = function (from_date, to_date, callback) {
+  var getHeartbeatBy_date = function (from_date, to_date, country_id, callback) {
 
     params = {};
     params.from_date = from_date;
     params.to_date = to_date;
+    params.country_id = country_id;
     
     doCurl("/heartbeat/by_date",params,function(error,body){
       callback(error,body);
