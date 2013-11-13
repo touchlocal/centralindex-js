@@ -562,9 +562,11 @@
    *  @param addressFields - Whether fields are activated for this country
    *  @param addressMatching - The configurable matching algorithm
    *  @param dateFormat - The format of the date for this country
+   *  @param iso_3166_alpha_3
+   *  @param iso_3166_numeric
    *  @return - the data from the api
   */
-  var postCountry = function (country_id, name, synonyms, continentName, continent, geonameId, dbpediaURL, freebaseURL, population, currencyCode, languages, areaInSqKm, capital, east, west, north, south, claimPrice, claimMethods, nokia_country_code, twilio_sms, twilio_phone, twilio_voice, currency_symbol, currency_symbol_html, postcodeLookupActive, addressFields, addressMatching, dateFormat, callback) {
+  var postCountry = function (country_id, name, synonyms, continentName, continent, geonameId, dbpediaURL, freebaseURL, population, currencyCode, languages, areaInSqKm, capital, east, west, north, south, claimPrice, claimMethods, nokia_country_code, twilio_sms, twilio_phone, twilio_voice, currency_symbol, currency_symbol_html, postcodeLookupActive, addressFields, addressMatching, dateFormat, iso_3166_alpha_3, iso_3166_numeric, callback) {
 
     params = {};
     params.country_id = country_id;
@@ -596,6 +598,8 @@
     params.addressFields = addressFields;
     params.addressMatching = addressMatching;
     params.dateFormat = dateFormat;
+    params.iso_3166_alpha_3 = iso_3166_alpha_3;
+    params.iso_3166_numeric = iso_3166_numeric;
     
     doCurl("/country",params,function(error,body){
       callback(error,body);
