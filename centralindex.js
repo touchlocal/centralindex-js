@@ -1,3 +1,4 @@
+  // require the request library
   var request = require('request');
 
   // constants
