@@ -4144,10 +4144,9 @@
    *  @param seed_masheryid
    *  @param supplier_masheryid
    *  @param country
-   *  @param reseller_masheryid
    *  @return - the data from the api
   */
-  var postSyndicationCreate = function (syndication_type, publisher_id, expiry_date, entity_id, group_id, seed_masheryid, supplier_masheryid, country, reseller_masheryid, callback) {
+  var postSyndicationCreate = function (syndication_type, publisher_id, expiry_date, entity_id, group_id, seed_masheryid, supplier_masheryid, country, callback) {
 
     params = {};
     params.syndication_type = syndication_type;
@@ -4158,7 +4157,6 @@
     params.seed_masheryid = seed_masheryid;
     params.supplier_masheryid = supplier_masheryid;
     params.country = country;
-    params.reseller_masheryid = reseller_masheryid;
     
     doCurl("/syndication/create",params,function(error,body){
       callback(error,body);
