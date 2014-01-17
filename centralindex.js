@@ -138,6 +138,65 @@
 
 
   /**
+   * Deletes an agency that matches a given agency id
+   *
+   *  @param agency_id
+   *  @return - the data from the api
+  */
+  var deleteAgency = function (agency_id, callback) {
+
+    params = {};
+    params.agency_id = agency_id;
+    
+    doCurl("/agency",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Returns an agency that matches a given agency id
+   *
+   *  @param agency_id
+   *  @return - the data from the api
+  */
+  var getAgency = function (agency_id, callback) {
+
+    params = {};
+    params.agency_id = agency_id;
+    
+    doCurl("/agency",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Update/Add a agency
+   *
+   *  @param agency_id
+   *  @param country
+   *  @param name
+   *  @param description
+   *  @param active
+   *  @return - the data from the api
+  */
+  var postAgency = function (agency_id, country, name, description, active, callback) {
+
+    params = {};
+    params.agency_id = agency_id;
+    params.country = country;
+    params.name = name;
+    params.description = description;
+    params.active = active;
+    
+    doCurl("/agency",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * The search matches a category name on a given string and language.
    *
    *  @param str - A string to search against, E.g. Plumbers e.g. but
@@ -279,6 +338,23 @@
 
 
   /**
+   * Returns business tool that matches a given tool id
+   *
+   *  @param tool_id
+   *  @return - the data from the api
+  */
+  var getBusiness_tool = function (tool_id, callback) {
+
+    params = {};
+    params.tool_id = tool_id;
+    
+    doCurl("/business_tool",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Update/Add a Business Tool
    *
    *  @param tool_id
@@ -298,23 +374,6 @@
     params.description = description;
     params.link_url = link_url;
     params.active = active;
-    
-    doCurl("/business_tool",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Returns business tool that matches a given tool id
-   *
-   *  @param tool_id
-   *  @return - the data from the api
-  */
-  var getBusiness_tool = function (tool_id, callback) {
-
-    params = {};
-    params.tool_id = tool_id;
     
     doCurl("/business_tool",params,function(error,body){
       callback(error,body);
@@ -376,6 +435,23 @@
 
 
   /**
+   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
+   *
+   *  @param category_id
+   *  @return - the data from the api
+  */
+  var getCategory = function (category_id, callback) {
+
+    params = {};
+    params.category_id = category_id;
+    
+    doCurl("/category",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known category id, an category object can be added.
    *
    *  @param category_id
@@ -389,23 +465,6 @@
     params.category_id = category_id;
     params.language = language;
     params.name = name;
-    
-    doCurl("/category",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Returns the supplied wolf category object by fetching the supplied category_id from our categories object.
-   *
-   *  @param category_id
-   *  @return - the data from the api
-  */
-  var getCategory = function (category_id, callback) {
-
-    params = {};
-    params.category_id = category_id;
     
     doCurl("/category",params,function(error,body){
       callback(error,body);
@@ -429,27 +488,6 @@
 
 
   /**
-   * With a known category id, a mapping object can be deleted.
-   *
-   *  @param category_id
-   *  @param category_type
-   *  @param mapped_id
-   *  @return - the data from the api
-  */
-  var deleteCategoryMappings = function (category_id, category_type, mapped_id, callback) {
-
-    params = {};
-    params.category_id = category_id;
-    params.category_type = category_type;
-    params.mapped_id = mapped_id;
-    
-    doCurl("/category/mappings",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * With a known category id, a mapping object can be added.
    *
    *  @param category_id
@@ -465,6 +503,27 @@
     params.type = type;
     params.id = id;
     params.name = name;
+    
+    doCurl("/category/mappings",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a known category id, a mapping object can be deleted.
+   *
+   *  @param category_id
+   *  @param category_type
+   *  @param mapped_id
+   *  @return - the data from the api
+  */
+  var deleteCategoryMappings = function (category_id, category_type, mapped_id, callback) {
+
+    params = {};
+    params.category_id = category_id;
+    params.category_type = category_type;
+    params.mapped_id = mapped_id;
     
     doCurl("/category/mappings",params,function(error,body){
       callback(error,body);
@@ -1012,6 +1071,44 @@
 
 
   /**
+   * Remove a agency from an entity
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityAgency = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/agency",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Update/Add a agency to an entity
+   *
+   *  @param entity_id
+   *  @param agency_id
+   *  @return - the data from the api
+  */
+  var postEntityAgency = function (entity_id, agency_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.agency_id = agency_id;
+    
+    doCurl("/entity/agency",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an background object can be added. There can however only be one background object.
    *
    *  @param entity_id
@@ -1109,6 +1206,23 @@
 
 
   /**
+   * Get all entities managed by a specified agency
+   *
+   *  @param agency_id
+   *  @return - the data from the api
+  */
+  var getEntityBy_agencyid = function (agency_id, callback) {
+
+    params = {};
+    params.agency_id = agency_id;
+    
+    doCurl("/entity/by_agencyid",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Get all entities within a specified group
    *
    *  @param group_id
@@ -1183,6 +1297,25 @@
 
 
   /**
+   * Allows a category object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityCategory = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/category",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
@@ -1196,25 +1329,6 @@
     params.entity_id = entity_id;
     params.category_id = category_id;
     params.category_type = category_type;
-    
-    doCurl("/entity/category",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a category object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityCategory = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/category",params,function(error,body){
       callback(error,body);
@@ -1309,25 +1423,6 @@
 
 
   /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityDocument = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
-    
-    doCurl("/entity/document",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * With a known entity id, an document object can be added.
    *
    *  @param entity_id
@@ -1349,21 +1444,19 @@
 
 
   /**
-   * With a known entity id, an email address object can be added.
+   * Allows a phone object to be reduced in confidence
    *
    *  @param entity_id
-   *  @param email_address
-   *  @param email_description
+   *  @param gen_id
    *  @return - the data from the api
   */
-  var postEntityEmail = function (entity_id, email_address, email_description, callback) {
+  var deleteEntityDocument = function (entity_id, gen_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.email_address = email_address;
-    params.email_description = email_description;
+    params.gen_id = gen_id;
     
-    doCurl("/entity/email",params,function(error,body){
+    doCurl("/entity/document",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1389,19 +1482,21 @@
 
 
   /**
-   * Allows an employee object to be reduced in confidence
+   * With a known entity id, an email address object can be added.
    *
    *  @param entity_id
-   *  @param gen_id
+   *  @param email_address
+   *  @param email_description
    *  @return - the data from the api
   */
-  var deleteEntityEmployee = function (entity_id, gen_id, callback) {
+  var postEntityEmail = function (entity_id, email_address, email_description, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.gen_id = gen_id;
+    params.email_address = email_address;
+    params.email_description = email_description;
     
-    doCurl("/entity/employee",params,function(error,body){
+    doCurl("/entity/email",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1431,6 +1526,25 @@
     params.description = description;
     params.email = email;
     params.phone_number = phone_number;
+    
+    doCurl("/entity/employee",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows an employee object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityEmployee = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
     
     doCurl("/entity/employee",params,function(error,body){
       callback(error,body);
@@ -1502,25 +1616,6 @@
 
 
   /**
-   * With a known entity id, a group  can be added to group members.
-   *
-   *  @param entity_id
-   *  @param group_id
-   *  @return - the data from the api
-  */
-  var postEntityGroup = function (entity_id, group_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.group_id = group_id;
-    
-    doCurl("/entity/group",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Allows a group object to be removed from an entities group members
    *
    *  @param entity_id
@@ -1540,19 +1635,19 @@
 
 
   /**
-   * Allows a image object to be reduced in confidence
+   * With a known entity id, a group  can be added to group members.
    *
    *  @param entity_id
-   *  @param gen_id
+   *  @param group_id
    *  @return - the data from the api
   */
-  var deleteEntityImage = function (entity_id, gen_id, callback) {
+  var postEntityGroup = function (entity_id, group_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.gen_id = gen_id;
+    params.group_id = group_id;
     
-    doCurl("/entity/image",params,function(error,body){
+    doCurl("/entity/group",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1572,6 +1667,25 @@
     params.entity_id = entity_id;
     params.filedata = filedata;
     params.image_name = image_name;
+    
+    doCurl("/entity/image",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a image object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityImage = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
     
     doCurl("/entity/image",params,function(error,body){
       callback(error,body);
@@ -1634,25 +1748,6 @@
 
 
   /**
-   * Allows a list description object to be reduced in confidence
-   *
-   *  @param gen_id
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  var deleteEntityList = function (gen_id, entity_id, callback) {
-
-    params = {};
-    params.gen_id = gen_id;
-    params.entity_id = entity_id;
-    
-    doCurl("/entity/list",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * With a known entity id, a list description object can be added.
    *
    *  @param entity_id
@@ -1674,21 +1769,19 @@
 
 
   /**
-   * With a known entity id, a logo object can be added.
+   * Allows a list description object to be reduced in confidence
    *
+   *  @param gen_id
    *  @param entity_id
-   *  @param filedata
-   *  @param logo_name
    *  @return - the data from the api
   */
-  var postEntityLogo = function (entity_id, filedata, logo_name, callback) {
+  var deleteEntityList = function (gen_id, entity_id, callback) {
 
     params = {};
+    params.gen_id = gen_id;
     params.entity_id = entity_id;
-    params.filedata = filedata;
-    params.logo_name = logo_name;
     
-    doCurl("/entity/logo",params,function(error,body){
+    doCurl("/entity/list",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1706,6 +1799,27 @@
     params = {};
     params.entity_id = entity_id;
     params.gen_id = gen_id;
+    
+    doCurl("/entity/logo",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a known entity id, a logo object can be added.
+   *
+   *  @param entity_id
+   *  @param filedata
+   *  @param logo_name
+   *  @return - the data from the api
+  */
+  var postEntityLogo = function (entity_id, filedata, logo_name, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.filedata = filedata;
+    params.logo_name = logo_name;
     
     doCurl("/entity/logo",params,function(error,body){
       callback(error,body);
@@ -1783,23 +1897,6 @@
 
 
   /**
-   * With a known entity id, a opening times object can be removed.
-   *
-   *  @param entity_id - The id of the entity to edit
-   *  @return - the data from the api
-  */
-  var deleteEntityOpening_times = function (entity_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    
-    doCurl("/entity/opening_times",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * With a known entity id, a opening times object can be added. Each day can be either 'closed' to indicate that the entity is closed that day, '24hour' to indicate that the entity is open all day or single/split time ranges can be supplied in 4-digit 24-hour format, such as '09001730' or '09001200,13001700' to indicate hours of opening.
    *
    *  @param entity_id - The id of the entity to edit
@@ -1835,19 +1932,17 @@
 
 
   /**
-   * Allows a phone object to be reduced in confidence
+   * With a known entity id, a opening times object can be removed.
    *
-   *  @param entity_id
-   *  @param gen_id
+   *  @param entity_id - The id of the entity to edit
    *  @return - the data from the api
   */
-  var deleteEntityPhone = function (entity_id, gen_id, callback) {
+  var deleteEntityOpening_times = function (entity_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
-    doCurl("/entity/phone",params,function(error,body){
+    doCurl("/entity/opening_times",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1867,6 +1962,25 @@
     params.entity_id = entity_id;
     params.number = number;
     params.trackable = trackable;
+    
+    doCurl("/entity/phone",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a phone object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityPhone = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
     
     doCurl("/entity/phone",params,function(error,body){
       callback(error,body);
@@ -2297,6 +2411,25 @@
 
 
   /**
+   * Allows a special offer object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntitySpecial_offer = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/special_offer",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, a website object can be added.
    *
    *  @param entity_id
@@ -2320,25 +2453,6 @@
     params.expiry_date = expiry_date;
     params.url = url;
     params.image_url = image_url;
-    
-    doCurl("/entity/special_offer",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a special offer object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntitySpecial_offer = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/special_offer",params,function(error,body){
       callback(error,body);
@@ -2599,6 +2713,23 @@
 
 
   /**
+   * Get a flatpack
+   *
+   *  @param flatpack_id - the unique id to search for
+   *  @return - the data from the api
+  */
+  var getFlatpack = function (flatpack_id, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    
+    doCurl("/flatpack",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Remove a flatpack using a supplied flatpack_id
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -2753,23 +2884,6 @@
 
 
   /**
-   * Get a flatpack
-   *
-   *  @param flatpack_id - the unique id to search for
-   *  @return - the data from the api
-  */
-  var getFlatpack = function (flatpack_id, callback) {
-
-    params = {};
-    params.flatpack_id = flatpack_id;
-    
-    doCurl("/flatpack",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Upload a CSS file for the Admin for this flatpack
    *
    *  @param flatpack_id - the id of the flatpack to update
@@ -2897,25 +3011,6 @@
 
 
   /**
-   * Remove a canned link to an existing flatpack site.
-   *
-   *  @param flatpack_id - the id of the flatpack to delete
-   *  @param gen_id - the id of the canned link to remove
-   *  @return - the data from the api
-  */
-  var deleteFlatpackLink = function (flatpack_id, gen_id, callback) {
-
-    params = {};
-    params.flatpack_id = flatpack_id;
-    params.gen_id = gen_id;
-    
-    doCurl("/flatpack/link",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Add a canned link to an existing flatpack site.
    *
    *  @param flatpack_id - the id of the flatpack to delete
@@ -2931,6 +3026,25 @@
     params.keywords = keywords;
     params.location = location;
     params.linkText = linkText;
+    
+    doCurl("/flatpack/link",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Remove a canned link to an existing flatpack site.
+   *
+   *  @param flatpack_id - the id of the flatpack to delete
+   *  @param gen_id - the id of the canned link to remove
+   *  @return - the data from the api
+  */
+  var deleteFlatpackLink = function (flatpack_id, gen_id, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
+    params.gen_id = gen_id;
     
     doCurl("/flatpack/link",params,function(error,body){
       callback(error,body);
@@ -2994,21 +3108,15 @@
 
 
   /**
-   * Update/Add a Group
+   * Delete a group with a specified group_id
    *
    *  @param group_id
-   *  @param name
-   *  @param description
-   *  @param url
    *  @return - the data from the api
   */
-  var postGroup = function (group_id, name, description, url, callback) {
+  var deleteGroup = function (group_id, callback) {
 
     params = {};
     params.group_id = group_id;
-    params.name = name;
-    params.description = description;
-    params.url = url;
     
     doCurl("/group",params,function(error,body){
       callback(error,body);
@@ -3034,15 +3142,21 @@
 
 
   /**
-   * Delete a group with a specified group_id
+   * Update/Add a Group
    *
    *  @param group_id
+   *  @param name
+   *  @param description
+   *  @param url
    *  @return - the data from the api
   */
-  var deleteGroup = function (group_id, callback) {
+  var postGroup = function (group_id, name, description, url, callback) {
 
     params = {};
     params.group_id = group_id;
+    params.name = name;
+    params.description = description;
+    params.url = url;
     
     doCurl("/group",params,function(error,body){
       callback(error,body);
@@ -3184,6 +3298,23 @@
 
 
   /**
+   * Get an ingest job from the collection
+   *
+   *  @param job_id
+   *  @return - the data from the api
+  */
+  var getIngest_job = function (job_id, callback) {
+
+    params = {};
+    params.job_id = job_id;
+    
+    doCurl("/ingest_job",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Add a ingest job to the collection
    *
    *  @param description
@@ -3195,23 +3326,6 @@
     params = {};
     params.description = description;
     params.category_type = category_type;
-    
-    doCurl("/ingest_job",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Get an ingest job from the collection
-   *
-   *  @param job_id
-   *  @return - the data from the api
-  */
-  var getIngest_job = function (job_id, callback) {
-
-    params = {};
-    params.job_id = job_id;
     
     doCurl("/ingest_job",params,function(error,body){
       callback(error,body);
@@ -3256,23 +3370,6 @@
     params.flush = flush;
     
     doCurl("/ingest_queue",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Read a location with the supplied ID in the locations reference database.
-   *
-   *  @param location_id
-   *  @return - the data from the api
-  */
-  var getLocation = function (location_id, callback) {
-
-    params = {};
-    params.location_id = location_id;
-    
-    doCurl("/location",params,function(error,body){
       callback(error,body);
     })
   }
@@ -3336,6 +3433,23 @@
 
 
   /**
+   * Read a location with the supplied ID in the locations reference database.
+   *
+   *  @param location_id
+   *  @return - the data from the api
+  */
+  var getLocation = function (location_id, callback) {
+
+    params = {};
+    params.location_id = location_id;
+    
+    doCurl("/location",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Read multiple locations with the supplied ID in the locations reference database.
    *
    *  @param location_ids
@@ -3347,6 +3461,23 @@
     params.location_ids = location_ids;
     
     doCurl("/location/multiple",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Fetch the project logo, the symbol of the Wolf
+   *
+   *  @param a
+   *  @return - the data from the api
+  */
+  var putLogo = function (a, callback) {
+
+    params = {};
+    params.a = a;
+    
+    doCurl("/logo",params,function(error,body){
       callback(error,body);
     })
   }
@@ -3368,23 +3499,6 @@
     params.b = b;
     params.c = c;
     params.d = d;
-    
-    doCurl("/logo",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Fetch the project logo, the symbol of the Wolf
-   *
-   *  @param a
-   *  @return - the data from the api
-  */
-  var putLogo = function (a, callback) {
-
-    params = {};
-    params.a = a;
     
     doCurl("/logo",params,function(error,body){
       callback(error,body);
@@ -3529,6 +3643,23 @@
 
 
   /**
+   * Fetching a message
+   *
+   *  @param message_id - The message id to pull the message for
+   *  @return - the data from the api
+  */
+  var getMessage = function (message_id, callback) {
+
+    params = {};
+    params.message_id = message_id;
+    
+    doCurl("/message",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Update/Add a message
    *
    *  @param message_id - Message id to pull
@@ -3554,23 +3685,6 @@
     params.subject = subject;
     params.body = body;
     params.bounced = bounced;
-    
-    doCurl("/message",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Fetching a message
-   *
-   *  @param message_id - The message id to pull the message for
-   *  @return - the data from the api
-  */
-  var getMessage = function (message_id, callback) {
-
-    params = {};
-    params.message_id = message_id;
     
     doCurl("/message",params,function(error,body){
       callback(error,body);
@@ -3756,12 +3870,12 @@
 
 
   /**
-   * Delete a publisher with a specified publisher_id
+   * Returns publisher that matches a given publisher id
    *
    *  @param publisher_id
    *  @return - the data from the api
   */
-  var deletePublisher = function (publisher_id, callback) {
+  var getPublisher = function (publisher_id, callback) {
 
     params = {};
     params.publisher_id = publisher_id;
@@ -3773,12 +3887,12 @@
 
 
   /**
-   * Returns publisher that matches a given publisher id
+   * Delete a publisher with a specified publisher_id
    *
    *  @param publisher_id
    *  @return - the data from the api
   */
-  var getPublisher = function (publisher_id, callback) {
+  var deletePublisher = function (publisher_id, callback) {
 
     params = {};
     params.publisher_id = publisher_id;
@@ -5016,12 +5130,12 @@
 
 
   /**
-   * Fetching a traction
+   * Deleting a traction
    *
    *  @param traction_id
    *  @return - the data from the api
   */
-  var getTraction = function (traction_id, callback) {
+  var deleteTraction = function (traction_id, callback) {
 
     params = {};
     params.traction_id = traction_id;
@@ -5033,12 +5147,12 @@
 
 
   /**
-   * Deleting a traction
+   * Fetching a traction
    *
    *  @param traction_id
    *  @return - the data from the api
   */
-  var deleteTraction = function (traction_id, callback) {
+  var getTraction = function (traction_id, callback) {
 
     params = {};
     params.traction_id = traction_id;
@@ -5204,6 +5318,23 @@
 
 
   /**
+   * With a unique ID address an user can be retrieved
+   *
+   *  @param user_id
+   *  @return - the data from the api
+  */
+  var getUser = function (user_id, callback) {
+
+    params = {};
+    params.user_id = user_id;
+    
+    doCurl("/user",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Update user based on email address or social_network/social_network_id
    *
    *  @param email
@@ -5219,9 +5350,10 @@
    *  @param reseller_admin_masheryid
    *  @param group_id
    *  @param admin_upgrader
+   *  @param agency_id
    *  @return - the data from the api
   */
-  var postUser = function (email, user_id, first_name, last_name, active, trust, creation_date, user_type, social_network, social_network_id, reseller_admin_masheryid, group_id, admin_upgrader, callback) {
+  var postUser = function (email, user_id, first_name, last_name, active, trust, creation_date, user_type, social_network, social_network_id, reseller_admin_masheryid, group_id, admin_upgrader, agency_id, callback) {
 
     params = {};
     params.email = email;
@@ -5237,23 +5369,7 @@
     params.reseller_admin_masheryid = reseller_admin_masheryid;
     params.group_id = group_id;
     params.admin_upgrader = admin_upgrader;
-    
-    doCurl("/user",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * With a unique ID address an user can be retrieved
-   *
-   *  @param user_id
-   *  @return - the data from the api
-  */
-  var getUser = function (user_id, callback) {
-
-    params = {};
-    params.user_id = user_id;
+    params.agency_id = agency_id;
     
     doCurl("/user",params,function(error,body){
       callback(error,body);
@@ -5413,21 +5529,24 @@
     getActivity_stream: getActivity_stream,
     getAdvertiserUpdated: getAdvertiserUpdated,
     getAdvertiserUpdatedBy_publisher: getAdvertiserUpdatedBy_publisher,
+    deleteAgency: deleteAgency,
+    getAgency: getAgency,
+    postAgency: postAgency,
     getAutocompleteCategory: getAutocompleteCategory,
     getAutocompleteKeyword: getAutocompleteKeyword,
     getAutocompleteLocation: getAutocompleteLocation,
     getAutocompleteLocationBy_resolution: getAutocompleteLocationBy_resolution,
     putBusiness: putBusiness,
-    postBusiness_tool: postBusiness_tool,
     getBusiness_tool: getBusiness_tool,
+    postBusiness_tool: postBusiness_tool,
     deleteBusiness_tool: deleteBusiness_tool,
     getBusiness_toolBy_masheryid: getBusiness_toolBy_masheryid,
     postBusiness_toolImage: postBusiness_toolImage,
-    putCategory: putCategory,
     getCategory: getCategory,
+    putCategory: putCategory,
     getCategoryAll: getCategoryAll,
-    deleteCategoryMappings: deleteCategoryMappings,
     postCategoryMappings: postCategoryMappings,
+    deleteCategoryMappings: deleteCategoryMappings,
     postCategoryMerge: postCategoryMerge,
     postCategorySynonym: postCategorySynonym,
     deleteCategorySynonym: deleteCategorySynonym,
@@ -5449,47 +5568,50 @@
     getEntityAdvertisers: getEntityAdvertisers,
     deleteEntityAffiliate_link: deleteEntityAffiliate_link,
     postEntityAffiliate_link: postEntityAffiliate_link,
+    deleteEntityAgency: deleteEntityAgency,
+    postEntityAgency: postEntityAgency,
     postEntityBackground: postEntityBackground,
     postEntityBulkCsv: postEntityBulkCsv,
     getEntityBulkCsvStatus: getEntityBulkCsvStatus,
     postEntityBulkJson: postEntityBulkJson,
     getEntityBulkJsonStatus: getEntityBulkJsonStatus,
+    getEntityBy_agencyid: getEntityBy_agencyid,
     getEntityBy_groupid: getEntityBy_groupid,
     deleteEntityBy_supplier: deleteEntityBy_supplier,
     getEntityBy_supplier_id: getEntityBy_supplier_id,
     getEntityBy_user_id: getEntityBy_user_id,
-    postEntityCategory: postEntityCategory,
     deleteEntityCategory: deleteEntityCategory,
+    postEntityCategory: postEntityCategory,
     getEntityChangelog: getEntityChangelog,
     postEntityClaim: postEntityClaim,
     deleteEntityDescription: deleteEntityDescription,
     postEntityDescription: postEntityDescription,
-    deleteEntityDocument: deleteEntityDocument,
     postEntityDocument: postEntityDocument,
-    postEntityEmail: postEntityEmail,
+    deleteEntityDocument: deleteEntityDocument,
     deleteEntityEmail: deleteEntityEmail,
-    deleteEntityEmployee: deleteEntityEmployee,
+    postEntityEmail: postEntityEmail,
     postEntityEmployee: postEntityEmployee,
+    deleteEntityEmployee: deleteEntityEmployee,
     postEntityFax: postEntityFax,
     deleteEntityFax: deleteEntityFax,
     postEntityGeopoint: postEntityGeopoint,
-    postEntityGroup: postEntityGroup,
     deleteEntityGroup: deleteEntityGroup,
-    deleteEntityImage: deleteEntityImage,
+    postEntityGroup: postEntityGroup,
     postEntityImage: postEntityImage,
+    deleteEntityImage: deleteEntityImage,
     deleteEntityInvoice_address: deleteEntityInvoice_address,
     postEntityInvoice_address: postEntityInvoice_address,
-    deleteEntityList: deleteEntityList,
     postEntityList: postEntityList,
-    postEntityLogo: postEntityLogo,
+    deleteEntityList: deleteEntityList,
     deleteEntityLogo: deleteEntityLogo,
+    postEntityLogo: postEntityLogo,
     postEntityMerge: postEntityMerge,
     postEntityMigrate_category: postEntityMigrate_category,
     postEntityName: postEntityName,
-    deleteEntityOpening_times: deleteEntityOpening_times,
     postEntityOpening_times: postEntityOpening_times,
-    deleteEntityPhone: deleteEntityPhone,
+    deleteEntityOpening_times: deleteEntityOpening_times,
     postEntityPhone: postEntityPhone,
+    deleteEntityPhone: deleteEntityPhone,
     postEntityPostal_address: postEntityPostal_address,
     getEntityProvisionalBy_supplier_id: getEntityProvisionalBy_supplier_id,
     getEntityRevisions: getEntityRevisions,
@@ -5506,8 +5628,8 @@
     postEntitySend_email: postEntitySend_email,
     deleteEntitySocialmedia: deleteEntitySocialmedia,
     postEntitySocialmedia: postEntitySocialmedia,
-    postEntitySpecial_offer: postEntitySpecial_offer,
     deleteEntitySpecial_offer: deleteEntitySpecial_offer,
+    postEntitySpecial_offer: postEntitySpecial_offer,
     postEntityStatus: postEntityStatus,
     deleteEntityTag: deleteEntityTag,
     postEntityTag: postEntityTag,
@@ -5520,9 +5642,9 @@
     deleteEntityWebsite: deleteEntityWebsite,
     postEntityWebsite: postEntityWebsite,
     putEntityserve: putEntityserve,
+    getFlatpack: getFlatpack,
     deleteFlatpack: deleteFlatpack,
     postFlatpack: postFlatpack,
-    getFlatpack: getFlatpack,
     postFlatpackAdminCSS: postFlatpackAdminCSS,
     postFlatpackAdminLargeLogo: postFlatpackAdminLargeLogo,
     postFlatpackAdminSmallLogo: postFlatpackAdminSmallLogo,
@@ -5530,14 +5652,14 @@
     getFlatpackBy_masheryid: getFlatpackBy_masheryid,
     getFlatpackClone: getFlatpackClone,
     postFlatpackIcon: postFlatpackIcon,
-    deleteFlatpackLink: deleteFlatpackLink,
     postFlatpackLink: postFlatpackLink,
+    deleteFlatpackLink: deleteFlatpackLink,
     postFlatpackLogo: postFlatpackLogo,
     postFlatpackSitemap: postFlatpackSitemap,
     postFlatpackUpload: postFlatpackUpload,
-    postGroup: postGroup,
-    getGroup: getGroup,
     deleteGroup: deleteGroup,
+    getGroup: getGroup,
+    postGroup: postGroup,
     getGroupAll: getGroupAll,
     postGroupBulk_delete: postGroupBulk_delete,
     postGroupBulk_ingest: postGroupBulk_ingest,
@@ -5545,23 +5667,23 @@
     getHeartbeatBy_date: getHeartbeatBy_date,
     getHeartbeatTodayClaims: getHeartbeatTodayClaims,
     postIngest_file: postIngest_file,
-    postIngest_job: postIngest_job,
     getIngest_job: getIngest_job,
+    postIngest_job: postIngest_job,
     getIngest_logBy_job_id: getIngest_logBy_job_id,
     getIngest_queue: getIngest_queue,
-    getLocation: getLocation,
     postLocation: postLocation,
+    getLocation: getLocation,
     getLocationMultiple: getLocationMultiple,
-    getLogo: getLogo,
     putLogo: putLogo,
+    getLogo: getLogo,
     getLookupCategory: getLookupCategory,
     getLookupLegacyCategory: getLookupLegacyCategory,
     getLookupLocation: getLookupLocation,
     getMatchByphone: getMatchByphone,
     getMatchByphone2: getMatchByphone2,
     getMatchOftheday: getMatchOftheday,
-    postMessage: postMessage,
     getMessage: getMessage,
+    postMessage: postMessage,
     getMessageBy_ses_id: getMessageBy_ses_id,
     putPrivate_object: putPrivate_object,
     deletePrivate_object: deletePrivate_object,
@@ -5571,8 +5693,8 @@
     getPtbModule: getPtbModule,
     getPtbRunrate: getPtbRunrate,
     getPtbValueadded: getPtbValueadded,
-    deletePublisher: deletePublisher,
     getPublisher: getPublisher,
+    deletePublisher: deletePublisher,
     postPublisher: postPublisher,
     getPublisherByCountry: getPublisherByCountry,
     getPublisherByEntityId: getPublisherByEntityId,
@@ -5631,8 +5753,8 @@
     getToolsValidate_email: getToolsValidate_email,
     getToolsValidate_phone: getToolsValidate_phone,
     postTraction: postTraction,
-    getTraction: getTraction,
     deleteTraction: deleteTraction,
+    getTraction: getTraction,
     getTractionActive: getTractionActive,
     putTransaction: putTransaction,
     getTransaction: getTransaction,
@@ -5641,8 +5763,8 @@
     postTransactionCancelled: postTransactionCancelled,
     postTransactionComplete: postTransactionComplete,
     postTransactionInprogress: postTransactionInprogress,
-    postUser: postUser,
     getUser: getUser,
+    postUser: postUser,
     getUserBy_email: getUserBy_email,
     getUserBy_groupid: getUserBy_groupid,
     getUserBy_reseller_admin_masheryid: getUserBy_reseller_admin_masheryid,
