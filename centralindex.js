@@ -2458,6 +2458,7 @@
    * Search for matching entities, ordered by nearness
    *
    *  @param what - What to get results for. E.g. Plumber e.g. plumber
+   *  @param country - The country to fetch results for e.g. gb
    *  @param per_page - Number of results returned per page
    *  @param page - Which page number to retrieve
    *  @param language - An ISO compatible language code, E.g. en
@@ -2465,10 +2466,11 @@
    *  @param longitude - The decimal longitude of the centre point of the search
    *  @return - the data from the api
   */
-  var getEntitySearchWhatBynearest = function (what, per_page, page, language, latitude, longitude, callback) {
+  var getEntitySearchWhatBynearest = function (what, country, per_page, page, language, latitude, longitude, callback) {
 
     params = {};
     params.what = what;
+    params.country = country;
     params.per_page = per_page;
     params.page = page;
     params.language = language;
@@ -2574,6 +2576,7 @@
    * Search for entities matching the supplied 'who', ordered by nearness
    *
    *  @param who - What to get results for. E.g. Plumber e.g. plumber
+   *  @param country - The country to fetch results for e.g. gb
    *  @param per_page - Number of results returned per page
    *  @param page - Which page number to retrieve
    *  @param language - An ISO compatible language code, E.g. en
@@ -2581,10 +2584,11 @@
    *  @param longitude - The decimal longitude of the centre point of the search
    *  @return - the data from the api
   */
-  var getEntitySearchWhoBynearest = function (who, per_page, page, language, latitude, longitude, callback) {
+  var getEntitySearchWhoBynearest = function (who, country, per_page, page, language, latitude, longitude, callback) {
 
     params = {};
     params.who = who;
+    params.country = country;
     params.per_page = per_page;
     params.page = page;
     params.language = language;
