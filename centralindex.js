@@ -4520,9 +4520,10 @@
    *  @param name
    *  @param description
    *  @param active
+   *  @param products
    *  @return - the data from the api
   */
-  var postReseller = function (reseller_id, country, name, description, active, callback) {
+  var postReseller = function (reseller_id, country, name, description, active, products, callback) {
 
     params = {};
     params.reseller_id = reseller_id;
@@ -4530,6 +4531,7 @@
     params.name = name;
     params.description = description;
     params.active = active;
+    params.products = products;
     
     doCurl("/reseller",params,function(error,body){
       callback(error,body);
@@ -5209,9 +5211,10 @@
    *  @param province
    *  @param postcode
    *  @param country
+   *  @param geocoder
    *  @return - the data from the api
   */
-  var getToolsGeocode = function (building_number, address1, address2, address3, district, town, county, province, postcode, country, callback) {
+  var getToolsGeocode = function (building_number, address1, address2, address3, district, town, county, province, postcode, country, geocoder, callback) {
 
     params = {};
     params.building_number = building_number;
@@ -5224,6 +5227,7 @@
     params.province = province;
     params.postcode = postcode;
     params.country = country;
+    params.geocoder = geocoder;
     
     doCurl("/tools/geocode",params,function(error,body){
       callback(error,body);
