@@ -4923,12 +4923,16 @@
    * Get all syndication log entries for a given entity id
    *
    *  @param entity_id
+   *  @param page
+   *  @param per_page
    *  @return - the data from the api
   */
-  var getSyndication_logBy_entity_id = function (entity_id, callback) {
+  var getSyndication_logBy_entity_id = function (entity_id, page, per_page, callback) {
 
     params = {};
     params.entity_id = entity_id;
+    params.page = page;
+    params.per_page = per_page;
     
     doCurl("/syndication_log/by_entity_id",params,function(error,body){
       callback(error,body);
