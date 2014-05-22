@@ -4244,9 +4244,13 @@
    *  @param searchDescriptionNoWhere - Description of serps page when no where is specified
    *  @param searchIntroHeader - Introductory header
    *  @param searchIntroText - Introductory text
+   *  @param cookiePolicyShow - whether to show cookie policy
+   *  @param cookiePolicyUrl - url of cookie policy
+   *  @param twitterUrl - url of twitter feed
+   *  @param facebookUrl - url of facebook feed
    *  @return - the data from the api
   */
-  var postMultipack = function (multipack_id, group_id, domainName, multipackName, less, country, menuTop, menuBottom, language, menuFooter, searchNumberResults, searchTitle, searchDescription, searchTitleNoWhere, searchDescriptionNoWhere, searchIntroHeader, searchIntroText, callback) {
+  var postMultipack = function (multipack_id, group_id, domainName, multipackName, less, country, menuTop, menuBottom, language, menuFooter, searchNumberResults, searchTitle, searchDescription, searchTitleNoWhere, searchDescriptionNoWhere, searchIntroHeader, searchIntroText, cookiePolicyShow, cookiePolicyUrl, twitterUrl, facebookUrl, callback) {
 
     params = {};
     params.multipack_id = multipack_id;
@@ -4266,6 +4270,10 @@
     params.searchDescriptionNoWhere = searchDescriptionNoWhere;
     params.searchIntroHeader = searchIntroHeader;
     params.searchIntroText = searchIntroText;
+    params.cookiePolicyShow = cookiePolicyShow;
+    params.cookiePolicyUrl = cookiePolicyUrl;
+    params.twitterUrl = twitterUrl;
+    params.facebookUrl = facebookUrl;
     
     doCurl("/multipack",params,function(error,body){
       callback(error,body);
