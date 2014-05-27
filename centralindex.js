@@ -4322,13 +4322,17 @@
    *
    *  @param multipack_id - the unique id to search for
    *  @param filedata
+   *  @param mapPinOffsetX
+   *  @param mapPinOffsetY
    *  @return - the data from the api
   */
-  var postMultipackMap_pin = function (multipack_id, filedata, callback) {
+  var postMultipackMap_pin = function (multipack_id, filedata, mapPinOffsetX, mapPinOffsetY, callback) {
 
     params = {};
     params.multipack_id = multipack_id;
     params.filedata = filedata;
+    params.mapPinOffsetX = mapPinOffsetX;
+    params.mapPinOffsetY = mapPinOffsetY;
     
     doCurl("/multipack/map_pin",params,function(error,body){
       callback(error,body);
@@ -6844,12 +6848,14 @@
    * Downgrade an existing user
    *
    *  @param user_id
+   *  @param user_type
    *  @return - the data from the api
   */
-  var postUserDowngrade = function (user_id, callback) {
+  var postUserDowngrade = function (user_id, user_type, callback) {
 
     params = {};
     params.user_id = user_id;
+    params.user_type = user_type;
     
     doCurl("/user/downgrade",params,function(error,body){
       callback(error,body);
