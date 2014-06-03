@@ -766,23 +766,6 @@
 
 
   /**
-   * Get the contract log from the ID supplied
-   *
-   *  @param contract_log_id
-   *  @return - the data from the api
-  */
-  var getContract_log = function (contract_log_id, callback) {
-
-    params = {};
-    params.contract_log_id = contract_log_id;
-    
-    doCurl("/contract_log",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Creates a new contract log for a given contract
    *
    *  @param contract_id
@@ -804,6 +787,23 @@
     params.success = success;
     params.amount = amount;
     params.currency = currency;
+    
+    doCurl("/contract_log",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Get the contract log from the ID supplied
+   *
+   *  @param contract_log_id
+   *  @return - the data from the api
+  */
+  var getContract_log = function (contract_log_id, callback) {
+
+    params = {};
+    params.contract_log_id = contract_log_id;
     
     doCurl("/contract_log",params,function(error,body){
       callback(error,body);
@@ -1041,12 +1041,16 @@
    * Allows a whole entity to be pulled from the datastore by its unique id
    *
    *  @param entity_id - The unique entity ID e.g. 379236608286720
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntity = function (entity_id, callback) {
+  var getEntity = function (entity_id, domain, path, callback) {
 
     params = {};
     params.entity_id = entity_id;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity",params,function(error,body){
       callback(error,body);
@@ -1656,25 +1660,6 @@
 
 
   /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityDocument = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
-    
-    doCurl("/entity/document",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * With a known entity id, an document object can be added.
    *
    *  @param entity_id
@@ -1688,6 +1673,25 @@
     params.entity_id = entity_id;
     params.name = name;
     params.filedata = filedata;
+    
+    doCurl("/entity/document",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a phone object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityDocument = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
     
     doCurl("/entity/document",params,function(error,body){
       callback(error,body);
@@ -1736,6 +1740,25 @@
 
 
   /**
+   * Allows an employee object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityEmployee = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/employee",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an employee object can be added.
    *
    *  @param entity_id
@@ -1759,25 +1782,6 @@
     params.description = description;
     params.email = email;
     params.phone_number = phone_number;
-    
-    doCurl("/entity/employee",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows an employee object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityEmployee = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/employee",params,function(error,body){
       callback(error,body);
@@ -1887,6 +1891,25 @@
 
 
   /**
+   * Allows a image object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityImage = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/image",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, a image object can be added.
    *
    *  @param entity_id
@@ -1900,25 +1923,6 @@
     params.entity_id = entity_id;
     params.filedata = filedata;
     params.image_name = image_name;
-    
-    doCurl("/entity/image",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a image object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityImage = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/image",params,function(error,body){
       callback(error,body);
@@ -2002,6 +2006,25 @@
 
 
   /**
+   * Allows a list description object to be reduced in confidence
+   *
+   *  @param gen_id
+   *  @param entity_id
+   *  @return - the data from the api
+  */
+  var deleteEntityList = function (gen_id, entity_id, callback) {
+
+    params = {};
+    params.gen_id = gen_id;
+    params.entity_id = entity_id;
+    
+    doCurl("/entity/list",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, a list description object can be added.
    *
    *  @param entity_id
@@ -2015,25 +2038,6 @@
     params.entity_id = entity_id;
     params.headline = headline;
     params.body = body;
-    
-    doCurl("/entity/list",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a list description object to be reduced in confidence
-   *
-   *  @param gen_id
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  var deleteEntityList = function (gen_id, entity_id, callback) {
-
-    params = {};
-    params.gen_id = gen_id;
-    params.entity_id = entity_id;
     
     doCurl("/entity/list",params,function(error,body){
       callback(error,body);
@@ -2195,6 +2199,23 @@
 
 
   /**
+   * With a known entity id, a opening times object can be removed.
+   *
+   *  @param entity_id - The id of the entity to edit
+   *  @return - the data from the api
+  */
+  var deleteEntityOpening_times = function (entity_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    
+    doCurl("/entity/opening_times",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, a opening times object can be added. Each day can be either 'closed' to indicate that the entity is closed that day, '24hour' to indicate that the entity is open all day or single/split time ranges can be supplied in 4-digit 24-hour format, such as '09001730' or '09001200,13001700' to indicate hours of opening.
    *
    *  @param entity_id - The id of the entity to edit
@@ -2222,23 +2243,6 @@
     params.sunday = sunday;
     params.closed = closed;
     params.closed_public_holidays = closed_public_holidays;
-    
-    doCurl("/entity/opening_times",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * With a known entity id, a opening times object can be removed.
-   *
-   *  @param entity_id - The id of the entity to edit
-   *  @return - the data from the api
-  */
-  var deleteEntityOpening_times = function (entity_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
     
     doCurl("/entity/opening_times",params,function(error,body){
       callback(error,body);
@@ -2427,9 +2431,11 @@
    *  @param page
    *  @param country
    *  @param language
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchByboundingbox = function (latitude_1, longitude_1, latitude_2, longitude_2, per_page, page, country, language, callback) {
+  var getEntitySearchByboundingbox = function (latitude_1, longitude_1, latitude_2, longitude_2, per_page, page, country, language, domain, path, callback) {
 
     params = {};
     params.latitude_1 = latitude_1;
@@ -2440,6 +2446,8 @@
     params.page = page;
     params.country = country;
     params.language = language;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/byboundingbox",params,function(error,body){
       callback(error,body);
@@ -2457,9 +2465,11 @@
    *  @param language - An ISO compatible language code, E.g. en
    *  @param latitude - The decimal latitude of the search context (optional)
    *  @param longitude - The decimal longitude of the search context (optional)
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchBylocation = function (where, per_page, page, country, language, latitude, longitude, callback) {
+  var getEntitySearchBylocation = function (where, per_page, page, country, language, latitude, longitude, domain, path, callback) {
 
     params = {};
     params.where = where;
@@ -2469,6 +2479,8 @@
     params.language = language;
     params.latitude = latitude;
     params.longitude = longitude;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/bylocation",params,function(error,body){
       callback(error,body);
@@ -2487,9 +2499,11 @@
    *  @param language - An ISO compatible language code, E.g. en
    *  @param latitude - The decimal latitude of the centre point of the search context
    *  @param longitude - The decimal longitude of the centre point of the search context
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchGroupBylocation = function (group_id, where, country, per_page, page, language, latitude, longitude, callback) {
+  var getEntitySearchGroupBylocation = function (group_id, where, country, per_page, page, language, latitude, longitude, domain, path, callback) {
 
     params = {};
     params.group_id = group_id;
@@ -2500,6 +2514,8 @@
     params.language = language;
     params.latitude = latitude;
     params.longitude = longitude;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/group/bylocation",params,function(error,body){
       callback(error,body);
@@ -2517,9 +2533,11 @@
    *  @param language - An ISO compatible language code, E.g. en
    *  @param latitude - The decimal latitude of the centre point of the search
    *  @param longitude - The decimal longitude of the centre point of the search
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchGroupBynearest = function (group_id, country, per_page, page, language, latitude, longitude, callback) {
+  var getEntitySearchGroupBynearest = function (group_id, country, per_page, page, language, latitude, longitude, domain, path, callback) {
 
     params = {};
     params.group_id = group_id;
@@ -2529,8 +2547,43 @@
     params.language = language;
     params.latitude = latitude;
     params.longitude = longitude;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/group/bynearest",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Search for entities matching the supplied 'who', ordered by nearness
+   *
+   *  @param keyword - What to get results for. E.g. cafe e.g. cafe
+   *  @param country - The country to fetch results for e.g. gb
+   *  @param per_page - Number of results returned per page
+   *  @param page - Which page number to retrieve
+   *  @param language - An ISO compatible language code, E.g. en
+   *  @param latitude - The decimal latitude of the centre point of the search
+   *  @param longitude - The decimal longitude of the centre point of the search
+   *  @param domain
+   *  @param path
+   *  @return - the data from the api
+  */
+  var getEntitySearchKeywordBynearest = function (keyword, country, per_page, page, language, latitude, longitude, domain, path, callback) {
+
+    params = {};
+    params.keyword = keyword;
+    params.country = country;
+    params.per_page = per_page;
+    params.page = page;
+    params.language = language;
+    params.latitude = latitude;
+    params.longitude = longitude;
+    params.domain = domain;
+    params.path = path;
+    
+    doCurl("/entity/search/keyword/bynearest",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2544,9 +2597,11 @@
    *  @param page - The page number to retrieve
    *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
    *  @param language - An ISO compatible language code, E.g. en
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchWhat = function (what, per_page, page, country, language, callback) {
+  var getEntitySearchWhat = function (what, per_page, page, country, language, domain, path, callback) {
 
     params = {};
     params.what = what;
@@ -2554,6 +2609,8 @@
     params.page = page;
     params.country = country;
     params.language = language;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/what",params,function(error,body){
       callback(error,body);
@@ -2573,9 +2630,11 @@
    *  @param page
    *  @param country - A valid ISO 3166 country code e.g. ie
    *  @param language
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchWhatByboundingbox = function (what, latitude_1, longitude_1, latitude_2, longitude_2, per_page, page, country, language, callback) {
+  var getEntitySearchWhatByboundingbox = function (what, latitude_1, longitude_1, latitude_2, longitude_2, per_page, page, country, language, domain, path, callback) {
 
     params = {};
     params.what = what;
@@ -2587,6 +2646,8 @@
     params.page = page;
     params.country = country;
     params.language = language;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/what/byboundingbox",params,function(error,body){
       callback(error,body);
@@ -2605,9 +2666,11 @@
    *  @param language - An ISO compatible language code, E.g. en
    *  @param latitude - The decimal latitude of the search context (optional)
    *  @param longitude - The decimal longitude of the search context (optional)
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchWhatBylocation = function (what, where, per_page, page, country, language, latitude, longitude, callback) {
+  var getEntitySearchWhatBylocation = function (what, where, per_page, page, country, language, latitude, longitude, domain, path, callback) {
 
     params = {};
     params.what = what;
@@ -2618,6 +2681,8 @@
     params.language = language;
     params.latitude = latitude;
     params.longitude = longitude;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/what/bylocation",params,function(error,body){
       callback(error,body);
@@ -2635,9 +2700,11 @@
    *  @param language - An ISO compatible language code, E.g. en
    *  @param latitude - The decimal latitude of the centre point of the search
    *  @param longitude - The decimal longitude of the centre point of the search
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchWhatBynearest = function (what, country, per_page, page, language, latitude, longitude, callback) {
+  var getEntitySearchWhatBynearest = function (what, country, per_page, page, language, latitude, longitude, domain, path, callback) {
 
     params = {};
     params.what = what;
@@ -2647,6 +2714,8 @@
     params.language = language;
     params.latitude = latitude;
     params.longitude = longitude;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/what/bynearest",params,function(error,body){
       callback(error,body);
@@ -2662,9 +2731,11 @@
    *  @param page - What page number to retrieve
    *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
    *  @param language - An ISO compatible language code, E.g. en
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchWho = function (who, per_page, page, country, language, callback) {
+  var getEntitySearchWho = function (who, per_page, page, country, language, domain, path, callback) {
 
     params = {};
     params.who = who;
@@ -2672,6 +2743,8 @@
     params.page = page;
     params.country = country;
     params.language = language;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/who",params,function(error,body){
       callback(error,body);
@@ -2691,9 +2764,11 @@
    *  @param page
    *  @param country
    *  @param language - An ISO compatible language code, E.g. en
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchWhoByboundingbox = function (who, latitude_1, longitude_1, latitude_2, longitude_2, per_page, page, country, language, callback) {
+  var getEntitySearchWhoByboundingbox = function (who, latitude_1, longitude_1, latitude_2, longitude_2, per_page, page, country, language, domain, path, callback) {
 
     params = {};
     params.who = who;
@@ -2705,6 +2780,8 @@
     params.page = page;
     params.country = country;
     params.language = language;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/who/byboundingbox",params,function(error,body){
       callback(error,body);
@@ -2723,9 +2800,11 @@
    *  @param latitude - The decimal latitude of the search context (optional)
    *  @param longitude - The decimal longitude of the search context (optional)
    *  @param language - An ISO compatible language code, E.g. en
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchWhoBylocation = function (who, where, per_page, page, country, latitude, longitude, language, callback) {
+  var getEntitySearchWhoBylocation = function (who, where, per_page, page, country, latitude, longitude, language, domain, path, callback) {
 
     params = {};
     params.who = who;
@@ -2736,6 +2815,8 @@
     params.latitude = latitude;
     params.longitude = longitude;
     params.language = language;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/who/bylocation",params,function(error,body){
       callback(error,body);
@@ -2753,9 +2834,11 @@
    *  @param language - An ISO compatible language code, E.g. en
    *  @param latitude - The decimal latitude of the centre point of the search
    *  @param longitude - The decimal longitude of the centre point of the search
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var getEntitySearchWhoBynearest = function (who, country, per_page, page, language, latitude, longitude, callback) {
+  var getEntitySearchWhoBynearest = function (who, country, per_page, page, language, latitude, longitude, domain, path, callback) {
 
     params = {};
     params.who = who;
@@ -2765,6 +2848,8 @@
     params.language = language;
     params.latitude = latitude;
     params.longitude = longitude;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entity/search/who/bynearest",params,function(error,body){
       callback(error,body);
@@ -2798,6 +2883,25 @@
 
 
   /**
+   * Allows a social media object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntitySocialmedia = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/socialmedia",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, a social media object can be added.
    *
    *  @param entity_id
@@ -2819,19 +2923,19 @@
 
 
   /**
-   * Allows a social media object to be reduced in confidence
+   * Allows a special offer object to be reduced in confidence
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  var deleteEntitySocialmedia = function (entity_id, gen_id, callback) {
+  var deleteEntitySpecial_offer = function (entity_id, gen_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.gen_id = gen_id;
     
-    doCurl("/entity/socialmedia",params,function(error,body){
+    doCurl("/entity/special_offer",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2869,25 +2973,6 @@
 
 
   /**
-   * Allows a special offer object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntitySpecial_offer = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
-    
-    doCurl("/entity/special_offer",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * With a known entity id, a status object can be updated.
    *
    *  @param entity_id
@@ -2905,6 +2990,25 @@
     params.inactive_description = inactive_description;
     
     doCurl("/entity/status",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a tag object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityTag = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/tag",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2932,19 +3036,19 @@
 
 
   /**
-   * Allows a tag object to be reduced in confidence
+   * Allows a testimonial object to be reduced in confidence
    *
    *  @param entity_id
    *  @param gen_id
    *  @return - the data from the api
   */
-  var deleteEntityTag = function (entity_id, gen_id, callback) {
+  var deleteEntityTestimonial = function (entity_id, gen_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.gen_id = gen_id;
     
-    doCurl("/entity/tag",params,function(error,body){
+    doCurl("/entity/testimonial",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2968,25 +3072,6 @@
     params.text = text;
     params.date = date;
     params.testifier_name = testifier_name;
-    
-    doCurl("/entity/testimonial",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a testimonial object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityTestimonial = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/testimonial",params,function(error,body){
       callback(error,body);
@@ -3147,14 +3232,18 @@
    *  @param entity_id - The id of the entity to create the entityserve event for
    *  @param country - the ISO code of the country
    *  @param event_type - The event type being recorded
+   *  @param domain
+   *  @param path
    *  @return - the data from the api
   */
-  var putEntityserve = function (entity_id, country, event_type, callback) {
+  var putEntityserve = function (entity_id, country, event_type, domain, path, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.country = country;
     params.event_type = event_type;
+    params.domain = domain;
+    params.path = path;
     
     doCurl("/entityserve",params,function(error,body){
       callback(error,body);
@@ -6981,8 +7070,8 @@
     postContractPaymentSetup: postContractPaymentSetup,
     postContractPaymentSuccess: postContractPaymentSuccess,
     postContractProvision: postContractProvision,
-    getContract_log: getContract_log,
     postContract_log: postContract_log,
+    getContract_log: getContract_log,
     getContract_logBy_contract_id: getContract_logBy_contract_id,
     getContract_logBy_payment_provider: getContract_logBy_payment_provider,
     getCountry: getCountry,
@@ -7019,24 +7108,24 @@
     postEntityClaim: postEntityClaim,
     postEntityDescription: postEntityDescription,
     deleteEntityDescription: deleteEntityDescription,
-    deleteEntityDocument: deleteEntityDocument,
     postEntityDocument: postEntityDocument,
+    deleteEntityDocument: deleteEntityDocument,
     deleteEntityEmail: deleteEntityEmail,
     postEntityEmail: postEntityEmail,
-    postEntityEmployee: postEntityEmployee,
     deleteEntityEmployee: deleteEntityEmployee,
+    postEntityEmployee: postEntityEmployee,
     postEntityFax: postEntityFax,
     deleteEntityFax: deleteEntityFax,
     postEntityGeopoint: postEntityGeopoint,
     postEntityGroup: postEntityGroup,
     deleteEntityGroup: deleteEntityGroup,
-    postEntityImage: postEntityImage,
     deleteEntityImage: deleteEntityImage,
+    postEntityImage: postEntityImage,
     postEntityImageBy_url: postEntityImageBy_url,
     deleteEntityInvoice_address: deleteEntityInvoice_address,
     postEntityInvoice_address: postEntityInvoice_address,
-    postEntityList: postEntityList,
     deleteEntityList: deleteEntityList,
+    postEntityList: postEntityList,
     getEntityList_by_group_id: getEntityList_by_group_id,
     deleteEntityLogo: deleteEntityLogo,
     postEntityLogo: postEntityLogo,
@@ -7044,8 +7133,8 @@
     postEntityMerge: postEntityMerge,
     postEntityMigrate_category: postEntityMigrate_category,
     postEntityName: postEntityName,
-    postEntityOpening_times: postEntityOpening_times,
     deleteEntityOpening_times: deleteEntityOpening_times,
+    postEntityOpening_times: postEntityOpening_times,
     deleteEntityPayment_type: deleteEntityPayment_type,
     postEntityPayment_type: postEntityPayment_type,
     deleteEntityPhone: deleteEntityPhone,
@@ -7058,6 +7147,7 @@
     getEntitySearchBylocation: getEntitySearchBylocation,
     getEntitySearchGroupBylocation: getEntitySearchGroupBylocation,
     getEntitySearchGroupBynearest: getEntitySearchGroupBynearest,
+    getEntitySearchKeywordBynearest: getEntitySearchKeywordBynearest,
     getEntitySearchWhat: getEntitySearchWhat,
     getEntitySearchWhatByboundingbox: getEntitySearchWhatByboundingbox,
     getEntitySearchWhatBylocation: getEntitySearchWhatBylocation,
@@ -7067,15 +7157,15 @@
     getEntitySearchWhoBylocation: getEntitySearchWhoBylocation,
     getEntitySearchWhoBynearest: getEntitySearchWhoBynearest,
     postEntitySend_email: postEntitySend_email,
-    postEntitySocialmedia: postEntitySocialmedia,
     deleteEntitySocialmedia: deleteEntitySocialmedia,
-    postEntitySpecial_offer: postEntitySpecial_offer,
+    postEntitySocialmedia: postEntitySocialmedia,
     deleteEntitySpecial_offer: deleteEntitySpecial_offer,
+    postEntitySpecial_offer: postEntitySpecial_offer,
     postEntityStatus: postEntityStatus,
-    postEntityTag: postEntityTag,
     deleteEntityTag: deleteEntityTag,
-    postEntityTestimonial: postEntityTestimonial,
+    postEntityTag: postEntityTag,
     deleteEntityTestimonial: deleteEntityTestimonial,
+    postEntityTestimonial: postEntityTestimonial,
     getEntityUncontribute: getEntityUncontribute,
     postEntityUnmerge: postEntityUnmerge,
     postEntityUser_trust: postEntityUser_trust,
