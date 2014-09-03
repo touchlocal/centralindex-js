@@ -246,9 +246,10 @@
    *  @param referrer_name
    *  @param destructive
    *  @param delete_mode - The type of object contribution deletion
+   *  @param master_entity_id - The entity you want this data to go to
    *  @return - the data from the api
   */
-  var putBusiness = function (name, building_number, branch_name, address1, address2, address3, district, town, county, province, postcode, country, latitude, longitude, timezone, telephone_number, additional_telephone_number, email, website, category_id, category_type, do_not_display, referrer_url, referrer_name, destructive, delete_mode, callback) {
+  var putBusiness = function (name, building_number, branch_name, address1, address2, address3, district, town, county, province, postcode, country, latitude, longitude, timezone, telephone_number, additional_telephone_number, email, website, category_id, category_type, do_not_display, referrer_url, referrer_name, destructive, delete_mode, master_entity_id, callback) {
 
     params = {};
     params.name = name;
@@ -277,6 +278,7 @@
     params.referrer_name = referrer_name;
     params.destructive = destructive;
     params.delete_mode = delete_mode;
+    params.master_entity_id = master_entity_id;
     
     doCurl("/business",params,function(error,body){
       callback(error,body);
@@ -290,14 +292,16 @@
    *  @param json - Business JSON
    *  @param country - The country to fetch results for e.g. gb
    *  @param timezone
+   *  @param master_entity_id - The entity you want this data to go to
    *  @return - the data from the api
   */
-  var putBusinessJson = function (json, country, timezone, callback) {
+  var putBusinessJson = function (json, country, timezone, master_entity_id, callback) {
 
     params = {};
     params.json = json;
     params.country = country;
     params.timezone = timezone;
+    params.master_entity_id = master_entity_id;
     
     doCurl("/business/json",params,function(error,body){
       callback(error,body);
@@ -6688,7 +6692,7 @@
 
 
   /**
-   * Fetch the entity and convert it to Nokia CSV format
+   * Fetch the entity and convert it to Nokia NBS CSV format
    *
    *  @param entity_id - The entity_id to fetch
    *  @return - the data from the api
