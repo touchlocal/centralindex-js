@@ -3203,16 +3203,20 @@
    * Separates an entity into two distinct entities 
    *
    *  @param entity_id
-   *  @param supplier_masheryid
-   *  @param supplier_id
+   *  @param unmerge_masheryid
+   *  @param unmerge_supplier_id
+   *  @param unmerge_user_id
+   *  @param destructive
    *  @return - the data from the api
   */
-  var postEntityUnmerge = function (entity_id, supplier_masheryid, supplier_id, callback) {
+  var postEntityUnmerge = function (entity_id, unmerge_masheryid, unmerge_supplier_id, unmerge_user_id, destructive, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.supplier_masheryid = supplier_masheryid;
-    params.supplier_id = supplier_id;
+    params.unmerge_masheryid = unmerge_masheryid;
+    params.unmerge_supplier_id = unmerge_supplier_id;
+    params.unmerge_user_id = unmerge_user_id;
+    params.destructive = destructive;
     
     doCurl("/entity/unmerge",params,function(error,body){
       callback(error,body);
