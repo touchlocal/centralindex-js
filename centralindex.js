@@ -2521,16 +2521,18 @@
    *  @param purge_masheryid - The purge masheryid to match
    *  @param purge_supplier_id - The purge supplier id to match
    *  @param purge_user_id - The purge user id to match
+   *  @param exclude - List of entity fields that are excluded from the purge
    *  @param destructive
    *  @return - the data from the api
   */
-  var postEntityPurge = function (entity_id, purge_masheryid, purge_supplier_id, purge_user_id, destructive, callback) {
+  var postEntityPurge = function (entity_id, purge_masheryid, purge_supplier_id, purge_user_id, exclude, destructive, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.purge_masheryid = purge_masheryid;
     params.purge_supplier_id = purge_supplier_id;
     params.purge_user_id = purge_user_id;
+    params.exclude = exclude;
     params.destructive = destructive;
     
     doCurl("/entity/purge",params,function(error,body){
