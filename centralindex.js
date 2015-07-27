@@ -6734,15 +6734,17 @@
    *  @param from - The phone number to call from
    *  @param pin - The pin to verify the phone number with
    *  @param twilio_voice - The language to read the verification in
+   *  @param extension - The pin to verify the phone number with
    *  @return - the data from the api
   */
-  var getToolsPhonecallVerify = function (to, from, pin, twilio_voice, callback) {
+  var getToolsPhonecallVerify = function (to, from, pin, twilio_voice, extension, callback) {
 
     params = {};
     params.to = to;
     params.from = from;
     params.pin = pin;
     params.twilio_voice = twilio_voice;
+    params.extension = extension;
     
     doCurl("/tools/phonecall/verify",params,function(error,body){
       callback(error,body);
