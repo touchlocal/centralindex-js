@@ -138,23 +138,6 @@
 
 
   /**
-   * Delete an association
-   *
-   *  @param association_id
-   *  @return - the data from the api
-  */
-  var deleteAssociation = function (association_id, callback) {
-
-    params = {};
-    params.association_id = association_id;
-    
-    doCurl("/association",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Will create a new association or update an existing one
    *
    *  @param association_id
@@ -170,6 +153,23 @@
     params.association_name = association_name;
     params.association_url = association_url;
     params.filedata = filedata;
+    
+    doCurl("/association",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Delete an association
+   *
+   *  @param association_id
+   *  @return - the data from the api
+  */
+  var deleteAssociation = function (association_id, callback) {
+
+    params = {};
+    params.association_id = association_id;
     
     doCurl("/association",params,function(error,body){
       callback(error,body);
@@ -388,6 +388,33 @@
 
 
   /**
+   * Update/Add a Business Tool
+   *
+   *  @param tool_id
+   *  @param country
+   *  @param headline
+   *  @param description
+   *  @param link_url
+   *  @param active
+   *  @return - the data from the api
+  */
+  var postBusiness_tool = function (tool_id, country, headline, description, link_url, active, callback) {
+
+    params = {};
+    params.tool_id = tool_id;
+    params.country = country;
+    params.headline = headline;
+    params.description = description;
+    params.link_url = link_url;
+    params.active = active;
+    
+    doCurl("/business_tool",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Returns business tool that matches a given tool id
    *
    *  @param tool_id
@@ -414,33 +441,6 @@
 
     params = {};
     params.tool_id = tool_id;
-    
-    doCurl("/business_tool",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Update/Add a Business Tool
-   *
-   *  @param tool_id
-   *  @param country
-   *  @param headline
-   *  @param description
-   *  @param link_url
-   *  @param active
-   *  @return - the data from the api
-  */
-  var postBusiness_tool = function (tool_id, country, headline, description, link_url, active, callback) {
-
-    params = {};
-    params.tool_id = tool_id;
-    params.country = country;
-    params.headline = headline;
-    params.description = description;
-    params.link_url = link_url;
-    params.active = active;
     
     doCurl("/business_tool",params,function(error,body){
       callback(error,body);
@@ -871,6 +871,23 @@
 
 
   /**
+   * Get the contract log from the ID supplied
+   *
+   *  @param contract_log_id
+   *  @return - the data from the api
+  */
+  var getContract_log = function (contract_log_id, callback) {
+
+    params = {};
+    params.contract_log_id = contract_log_id;
+    
+    doCurl("/contract_log",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Creates a new contract log for a given contract
    *
    *  @param contract_id
@@ -892,23 +909,6 @@
     params.success = success;
     params.amount = amount;
     params.currency = currency;
-    
-    doCurl("/contract_log",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Get the contract log from the ID supplied
-   *
-   *  @param contract_log_id
-   *  @return - the data from the api
-  */
-  var getContract_log = function (contract_log_id, callback) {
-
-    params = {};
-    params.contract_log_id = contract_log_id;
     
     doCurl("/contract_log",params,function(error,body){
       callback(error,body);
@@ -953,6 +953,23 @@
     params.per_page = per_page;
     
     doCurl("/contract_log/by_payment_provider",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Fetching a country
+   *
+   *  @param country_id
+   *  @return - the data from the api
+  */
+  var getCountry = function (country_id, callback) {
+
+    params = {};
+    params.country_id = country_id;
+    
+    doCurl("/country",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1026,23 +1043,6 @@
     params.dateFormat = dateFormat;
     params.iso_3166_alpha_3 = iso_3166_alpha_3;
     params.iso_3166_numeric = iso_3166_numeric;
-    
-    doCurl("/country",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Fetching a country
-   *
-   *  @param country_id
-   *  @return - the data from the api
-  */
-  var getCountry = function (country_id, callback) {
-
-    params = {};
-    params.country_id = country_id;
     
     doCurl("/country",params,function(error,body){
       callback(error,body);
@@ -1358,9 +1358,10 @@
    *  @param limit - The number of advertisers that are to be returned
    *  @param country - Which country to return results for. An ISO compatible country code, E.g. ie e.g. ie
    *  @param language - An ISO compatible language code, E.g. en
+   *  @param benchmark
    *  @return - the data from the api
   */
-  var getEntityAdvertisers = function (tag, where, limit, country, language, callback) {
+  var getEntityAdvertisers = function (tag, where, limit, country, language, benchmark, callback) {
 
     params = {};
     params.tag = tag;
@@ -1368,6 +1369,7 @@
     params.limit = limit;
     params.country = country;
     params.language = language;
+    params.benchmark = benchmark;
     
     doCurl("/entity/advertisers",params,function(error,body){
       callback(error,body);
@@ -1414,6 +1416,25 @@
 
 
   /**
+   * Allows an affiliate link object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityAffiliate_link = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/affiliate_link",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an affiliate link object can be added.
    *
    *  @param entity_id
@@ -1441,19 +1462,23 @@
 
 
   /**
-   * Allows an affiliate link object to be reduced in confidence
+   * Will create a new association_membership or update an existing one
    *
    *  @param entity_id
-   *  @param gen_id
+   *  @param association_id
+   *  @param association_member_url
+   *  @param association_member_id
    *  @return - the data from the api
   */
-  var deleteEntityAffiliate_link = function (entity_id, gen_id, callback) {
+  var postEntityAssociation_membership = function (entity_id, association_id, association_member_url, association_member_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.gen_id = gen_id;
+    params.association_id = association_id;
+    params.association_member_url = association_member_url;
+    params.association_member_id = association_member_id;
     
-    doCurl("/entity/affiliate_link",params,function(error,body){
+    doCurl("/entity/association_membership",params,function(error,body){
       callback(error,body);
     })
   }
@@ -1471,29 +1496,6 @@
     params = {};
     params.entity_id = entity_id;
     params.gen_id = gen_id;
-    
-    doCurl("/entity/association_membership",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Will create a new association_membership or update an existing one
-   *
-   *  @param entity_id
-   *  @param association_id
-   *  @param association_member_url
-   *  @param association_member_id
-   *  @return - the data from the api
-  */
-  var postEntityAssociation_membership = function (entity_id, association_id, association_member_url, association_member_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.association_id = association_id;
-    params.association_member_url = association_member_url;
-    params.association_member_id = association_member_id;
     
     doCurl("/entity/association_membership",params,function(error,body){
       callback(error,body);
@@ -1673,6 +1675,25 @@
 
 
   /**
+   * Allows a category object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityCategory = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/category",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an category object can be added.
    *
    *  @param entity_id
@@ -1686,25 +1707,6 @@
     params.entity_id = entity_id;
     params.category_id = category_id;
     params.category_type = category_type;
-    
-    doCurl("/entity/category",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a category object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityCategory = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/category",params,function(error,body){
       callback(error,body);
@@ -1860,6 +1862,25 @@
 
 
   /**
+   * Allows a phone object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityDocument = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/document",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, an document object can be added.
    *
    *  @param entity_id
@@ -1873,25 +1894,6 @@
     params.entity_id = entity_id;
     params.name = name;
     params.filedata = filedata;
-    
-    doCurl("/entity/document",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityDocument = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/document",params,function(error,body){
       callback(error,body);
@@ -2129,6 +2131,25 @@
 
 
   /**
+   * Allows a image object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityImage = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/image",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, a image object can be added.
    *
    *  @param entity_id
@@ -2142,25 +2163,6 @@
     params.entity_id = entity_id;
     params.filedata = filedata;
     params.image_name = image_name;
-    
-    doCurl("/entity/image",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a image object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityImage = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/image",params,function(error,body){
       callback(error,body);
@@ -2184,23 +2186,6 @@
     params.image_name = image_name;
     
     doCurl("/entity/image/by_url",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
-   *
-   *  @param entity_id
-   *  @return - the data from the api
-  */
-  var deleteEntityInvoice_address = function (entity_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    
-    doCurl("/entity/invoice_address",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2244,21 +2229,17 @@
 
 
   /**
-   * With a known entity id, a list description object can be added.
+   * With a known entity id and a known invoice_address ID, we can delete a specific invoice_address object from an enitity.
    *
    *  @param entity_id
-   *  @param headline
-   *  @param body
    *  @return - the data from the api
   */
-  var postEntityList = function (entity_id, headline, body, callback) {
+  var deleteEntityInvoice_address = function (entity_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.headline = headline;
-    params.body = body;
     
-    doCurl("/entity/list",params,function(error,body){
+    doCurl("/entity/invoice_address",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2276,6 +2257,27 @@
     params = {};
     params.gen_id = gen_id;
     params.entity_id = entity_id;
+    
+    doCurl("/entity/list",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a known entity id, a list description object can be added.
+   *
+   *  @param entity_id
+   *  @param headline
+   *  @param body
+   *  @return - the data from the api
+  */
+  var postEntityList = function (entity_id, headline, body, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.headline = headline;
+    params.body = body;
     
     doCurl("/entity/list",params,function(error,body){
       callback(error,body);
@@ -2305,6 +2307,25 @@
 
 
   /**
+   * Allows a phone object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityLogo = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/logo",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * With a known entity id, a logo object can be added.
    *
    *  @param entity_id
@@ -2318,25 +2339,6 @@
     params.entity_id = entity_id;
     params.filedata = filedata;
     params.logo_name = logo_name;
-    
-    doCurl("/entity/logo",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Allows a phone object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityLogo = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
     
     doCurl("/entity/logo",params,function(error,body){
       callback(error,body);
@@ -2491,25 +2493,6 @@
 
 
   /**
-   * With a known entity id, a payment_type object can be added.
-   *
-   *  @param entity_id - the id of the entity to add the payment type to
-   *  @param payment_type - the payment type to add to the entity
-   *  @return - the data from the api
-  */
-  var postEntityPayment_type = function (entity_id, payment_type, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.payment_type = payment_type;
-    
-    doCurl("/entity/payment_type",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Allows a payment_type object to be reduced in confidence
    *
    *  @param entity_id
@@ -2529,19 +2512,19 @@
 
 
   /**
-   * Allows a phone object to be reduced in confidence
+   * With a known entity id, a payment_type object can be added.
    *
-   *  @param entity_id
-   *  @param gen_id
+   *  @param entity_id - the id of the entity to add the payment type to
+   *  @param payment_type - the payment type to add to the entity
    *  @return - the data from the api
   */
-  var deleteEntityPhone = function (entity_id, gen_id, callback) {
+  var postEntityPayment_type = function (entity_id, payment_type, callback) {
 
     params = {};
     params.entity_id = entity_id;
-    params.gen_id = gen_id;
+    params.payment_type = payment_type;
     
-    doCurl("/entity/phone",params,function(error,body){
+    doCurl("/entity/payment_type",params,function(error,body){
       callback(error,body);
     })
   }
@@ -2561,6 +2544,25 @@
     params.entity_id = entity_id;
     params.number = number;
     params.trackable = trackable;
+    
+    doCurl("/entity/phone",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a phone object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityPhone = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
     
     doCurl("/entity/phone",params,function(error,body){
       callback(error,body);
@@ -2766,9 +2768,10 @@
    *  @param domain
    *  @param path
    *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
+   *  @param benchmark
    *  @return - the data from the api
   */
-  var getEntitySearchBylocation = function (where, per_page, page, country, language, latitude, longitude, domain, path, restrict_category_ids, callback) {
+  var getEntitySearchBylocation = function (where, per_page, page, country, language, latitude, longitude, domain, path, restrict_category_ids, benchmark, callback) {
 
     params = {};
     params.where = where;
@@ -2781,6 +2784,7 @@
     params.domain = domain;
     params.path = path;
     params.restrict_category_ids = restrict_category_ids;
+    params.benchmark = benchmark;
     
     doCurl("/entity/search/bylocation",params,function(error,body){
       callback(error,body);
@@ -2873,9 +2877,10 @@
    *  @param domain
    *  @param path
    *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
+   *  @param benchmark
    *  @return - the data from the api
   */
-  var getEntitySearchWhat = function (what, per_page, page, country, language, domain, path, restrict_category_ids, callback) {
+  var getEntitySearchWhat = function (what, per_page, page, country, language, domain, path, restrict_category_ids, benchmark, callback) {
 
     params = {};
     params.what = what;
@@ -2886,6 +2891,7 @@
     params.domain = domain;
     params.path = path;
     params.restrict_category_ids = restrict_category_ids;
+    params.benchmark = benchmark;
     
     doCurl("/entity/search/what",params,function(error,body){
       callback(error,body);
@@ -2946,9 +2952,10 @@
    *  @param domain
    *  @param path
    *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
+   *  @param benchmark
    *  @return - the data from the api
   */
-  var getEntitySearchWhatBylocation = function (what, where, per_page, page, country, language, latitude, longitude, domain, path, restrict_category_ids, callback) {
+  var getEntitySearchWhatBylocation = function (what, where, per_page, page, country, language, latitude, longitude, domain, path, restrict_category_ids, benchmark, callback) {
 
     params = {};
     params.what = what;
@@ -2962,6 +2969,7 @@
     params.domain = domain;
     params.path = path;
     params.restrict_category_ids = restrict_category_ids;
+    params.benchmark = benchmark;
     
     doCurl("/entity/search/what/bylocation",params,function(error,body){
       callback(error,body);
@@ -3015,9 +3023,10 @@
    *  @param domain
    *  @param path
    *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
+   *  @param benchmark
    *  @return - the data from the api
   */
-  var getEntitySearchWho = function (who, per_page, page, country, language, domain, path, restrict_category_ids, callback) {
+  var getEntitySearchWho = function (who, per_page, page, country, language, domain, path, restrict_category_ids, benchmark, callback) {
 
     params = {};
     params.who = who;
@@ -3028,6 +3037,7 @@
     params.domain = domain;
     params.path = path;
     params.restrict_category_ids = restrict_category_ids;
+    params.benchmark = benchmark;
     
     doCurl("/entity/search/who",params,function(error,body){
       callback(error,body);
@@ -3088,9 +3098,10 @@
    *  @param domain
    *  @param path
    *  @param restrict_category_ids - Pipe delimited optional IDs to restrict matches to (optional)
+   *  @param benchmark
    *  @return - the data from the api
   */
-  var getEntitySearchWhoBylocation = function (who, where, per_page, page, country, latitude, longitude, language, domain, path, restrict_category_ids, callback) {
+  var getEntitySearchWhoBylocation = function (who, where, per_page, page, country, latitude, longitude, language, domain, path, restrict_category_ids, benchmark, callback) {
 
     params = {};
     params.who = who;
@@ -3104,6 +3115,7 @@
     params.domain = domain;
     params.path = path;
     params.restrict_category_ids = restrict_category_ids;
+    params.benchmark = benchmark;
     
     doCurl("/entity/search/who/bylocation",params,function(error,body){
       callback(error,body);
@@ -3283,25 +3295,6 @@
 
 
   /**
-   * Allows a tag object to be reduced in confidence
-   *
-   *  @param entity_id
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var deleteEntityTag = function (entity_id, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.gen_id = gen_id;
-    
-    doCurl("/entity/tag",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * With a known entity id, an tag object can be added.
    *
    *  @param entity_id
@@ -3315,6 +3308,25 @@
     params.entity_id = entity_id;
     params.tag = tag;
     params.language = language;
+    
+    doCurl("/entity/tag",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Allows a tag object to be reduced in confidence
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityTag = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
     
     doCurl("/entity/tag",params,function(error,body){
       callback(error,body);
@@ -3474,31 +3486,6 @@
 
 
   /**
-   * With a known entity id, a website object can be added.
-   *
-   *  @param entity_id
-   *  @param website_url
-   *  @param display_url
-   *  @param website_description
-   *  @param gen_id
-   *  @return - the data from the api
-  */
-  var postEntityWebsite = function (entity_id, website_url, display_url, website_description, gen_id, callback) {
-
-    params = {};
-    params.entity_id = entity_id;
-    params.website_url = website_url;
-    params.display_url = display_url;
-    params.website_description = website_description;
-    params.gen_id = gen_id;
-    
-    doCurl("/entity/website",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Allows a website object to be reduced in confidence
    *
    *  @param entity_id
@@ -3518,19 +3505,25 @@
 
 
   /**
-   * Allows a yext list object to be removed
+   * With a known entity id, a website object can be added.
    *
    *  @param entity_id
+   *  @param website_url
+   *  @param display_url
+   *  @param website_description
    *  @param gen_id
    *  @return - the data from the api
   */
-  var deleteEntityYext_list = function (entity_id, gen_id, callback) {
+  var postEntityWebsite = function (entity_id, website_url, display_url, website_description, gen_id, callback) {
 
     params = {};
     params.entity_id = entity_id;
+    params.website_url = website_url;
+    params.display_url = display_url;
+    params.website_description = website_description;
     params.gen_id = gen_id;
     
-    doCurl("/entity/yext_list",params,function(error,body){
+    doCurl("/entity/website",params,function(error,body){
       callback(error,body);
     })
   }
@@ -3562,6 +3555,25 @@
 
 
   /**
+   * Allows a yext list object to be removed
+   *
+   *  @param entity_id
+   *  @param gen_id
+   *  @return - the data from the api
+  */
+  var deleteEntityYext_list = function (entity_id, gen_id, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.gen_id = gen_id;
+    
+    doCurl("/entity/yext_list",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Add an entityserve document
    *
    *  @param entity_id - The id of the entity to create the entityserve event for
@@ -3581,23 +3593,6 @@
     params.path = path;
     
     doCurl("/entityserve",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Get a flatpack
-   *
-   *  @param flatpack_id - the unique id to search for
-   *  @return - the data from the api
-  */
-  var getFlatpack = function (flatpack_id, callback) {
-
-    params = {};
-    params.flatpack_id = flatpack_id;
-    
-    doCurl("/flatpack",params,function(error,body){
       callback(error,body);
     })
   }
@@ -3746,6 +3741,23 @@
     params.products = products;
     params.linkToRoot = linkToRoot;
     params.termsLink = termsLink;
+    
+    doCurl("/flatpack",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Get a flatpack
+   *
+   *  @param flatpack_id - the unique id to search for
+   *  @return - the data from the api
+  */
+  var getFlatpack = function (flatpack_id, callback) {
+
+    params = {};
+    params.flatpack_id = flatpack_id;
     
     doCurl("/flatpack",params,function(error,body){
       callback(error,body);
@@ -4096,25 +4108,15 @@
 
 
   /**
-   * Update/Add a Group
+   * Returns group that matches a given group id
    *
    *  @param group_id
-   *  @param name
-   *  @param description
-   *  @param url
-   *  @param stamp_user_id
-   *  @param stamp_sql
    *  @return - the data from the api
   */
-  var postGroup = function (group_id, name, description, url, stamp_user_id, stamp_sql, callback) {
+  var getGroup = function (group_id, callback) {
 
     params = {};
     params.group_id = group_id;
-    params.name = name;
-    params.description = description;
-    params.url = url;
-    params.stamp_user_id = stamp_user_id;
-    params.stamp_sql = stamp_sql;
     
     doCurl("/group",params,function(error,body){
       callback(error,body);
@@ -4140,15 +4142,25 @@
 
 
   /**
-   * Returns group that matches a given group id
+   * Update/Add a Group
    *
    *  @param group_id
+   *  @param name
+   *  @param description
+   *  @param url
+   *  @param stamp_user_id
+   *  @param stamp_sql
    *  @return - the data from the api
   */
-  var getGroup = function (group_id, callback) {
+  var postGroup = function (group_id, name, description, url, stamp_user_id, stamp_sql, callback) {
 
     params = {};
     params.group_id = group_id;
+    params.name = name;
+    params.description = description;
+    params.url = url;
+    params.stamp_user_id = stamp_user_id;
+    params.stamp_sql = stamp_sql;
     
     doCurl("/group",params,function(error,body){
       callback(error,body);
@@ -4488,23 +4500,91 @@
 
 
   /**
-   * Fetch the project logo, the symbol of the Wolf
+   * Create/Update login details
    *
-   *  @param a
-   *  @param b
-   *  @param c
-   *  @param d
+   *  @param login_id
+   *  @param email
+   *  @param password
    *  @return - the data from the api
   */
-  var getLogo = function (a, b, c, d, callback) {
+  var postLogin = function (login_id, email, password, callback) {
 
     params = {};
-    params.a = a;
-    params.b = b;
-    params.c = c;
-    params.d = d;
+    params.login_id = login_id;
+    params.email = email;
+    params.password = password;
     
-    doCurl("/logo",params,function(error,body){
+    doCurl("/login",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a unique login_id a login can be retrieved
+   *
+   *  @param login_id
+   *  @return - the data from the api
+  */
+  var getLogin = function (login_id, callback) {
+
+    params = {};
+    params.login_id = login_id;
+    
+    doCurl("/login",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a unique login_id a login can be deleted
+   *
+   *  @param login_id
+   *  @return - the data from the api
+  */
+  var deleteLogin = function (login_id, callback) {
+
+    params = {};
+    params.login_id = login_id;
+    
+    doCurl("/login",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a unique email address a login can be retrieved
+   *
+   *  @param email
+   *  @return - the data from the api
+  */
+  var getLoginBy_email = function (email, callback) {
+
+    params = {};
+    params.email = email;
+    
+    doCurl("/login/by_email",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Verify that a supplied email and password match a users saved login details
+   *
+   *  @param email
+   *  @param password
+   *  @return - the data from the api
+  */
+  var getLoginVerify = function (email, password, callback) {
+
+    params = {};
+    params.email = email;
+    params.password = password;
+    
+    doCurl("/login/verify",params,function(error,body){
       callback(error,body);
     })
   }
@@ -4520,6 +4600,29 @@
 
     params = {};
     params.a = a;
+    
+    doCurl("/logo",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Fetch the project logo, the symbol of the Wolf
+   *
+   *  @param a
+   *  @param b
+   *  @param c
+   *  @param d
+   *  @return - the data from the api
+  */
+  var getLogo = function (a, b, c, d, callback) {
+
+    params = {};
+    params.a = a;
+    params.b = b;
+    params.c = c;
+    params.d = d;
     
     doCurl("/logo",params,function(error,body){
       callback(error,body);
@@ -4729,6 +4832,23 @@
 
 
   /**
+   * Fetching a message
+   *
+   *  @param message_id - The message id to pull the message for
+   *  @return - the data from the api
+  */
+  var getMessage = function (message_id, callback) {
+
+    params = {};
+    params.message_id = message_id;
+    
+    doCurl("/message",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Update/Add a message
    *
    *  @param message_id - Message id to pull
@@ -4754,23 +4874,6 @@
     params.subject = subject;
     params.body = body;
     params.bounced = bounced;
-    
-    doCurl("/message",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Fetching a message
-   *
-   *  @param message_id - The message id to pull the message for
-   *  @return - the data from the api
-  */
-  var getMessage = function (message_id, callback) {
-
-    params = {};
-    params.message_id = message_id;
     
     doCurl("/message",params,function(error,body){
       callback(error,body);
@@ -5009,6 +5112,23 @@
 
 
   /**
+   * Fetch an ops_log
+   *
+   *  @param ops_log_id
+   *  @return - the data from the api
+  */
+  var getOps_log = function (ops_log_id, callback) {
+
+    params = {};
+    params.ops_log_id = ops_log_id;
+    
+    doCurl("/ops_log",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Create an ops_log
    *
    *  @param success
@@ -5026,23 +5146,6 @@
     params.action = action;
     params.data = data;
     params.slack_channel = slack_channel;
-    
-    doCurl("/ops_log",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Fetch an ops_log
-   *
-   *  @param ops_log_id
-   *  @return - the data from the api
-  */
-  var getOps_log = function (ops_log_id, callback) {
-
-    params = {};
-    params.ops_log_id = ops_log_id;
     
     doCurl("/ops_log",params,function(error,body){
       callback(error,body);
@@ -5104,23 +5207,6 @@
 
 
   /**
-   * Returns the product information given a valid product_id
-   *
-   *  @param product_id
-   *  @return - the data from the api
-  */
-  var getProduct = function (product_id, callback) {
-
-    params = {};
-    params.product_id = product_id;
-    
-    doCurl("/product",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Update/Add a product
    *
    *  @param product_id - The ID of the product
@@ -5154,6 +5240,23 @@
     params.bullets = bullets;
     params.outro_paragraph = outro_paragraph;
     params.thanks_paragraph = thanks_paragraph;
+    
+    doCurl("/product",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Returns the product information given a valid product_id
+   *
+   *  @param product_id
+   *  @return - the data from the api
+  */
+  var getProduct = function (product_id, callback) {
+
+    params = {};
+    params.product_id = product_id;
     
     doCurl("/product",params,function(error,body){
       callback(error,body);
@@ -5366,6 +5469,23 @@
 
 
   /**
+   * Returns publisher that matches a given publisher id
+   *
+   *  @param publisher_id
+   *  @return - the data from the api
+  */
+  var getPublisher = function (publisher_id, callback) {
+
+    params = {};
+    params.publisher_id = publisher_id;
+    
+    doCurl("/publisher",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Delete a publisher with a specified publisher_id
    *
    *  @param publisher_id
@@ -5402,23 +5522,6 @@
     params.description = description;
     params.active = active;
     params.url_patterns = url_patterns;
-    
-    doCurl("/publisher",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Returns publisher that matches a given publisher id
-   *
-   *  @param publisher_id
-   *  @return - the data from the api
-  */
-  var getPublisher = function (publisher_id, callback) {
-
-    params = {};
-    params.publisher_id = publisher_id;
     
     doCurl("/publisher",params,function(error,body){
       callback(error,body);
@@ -5480,23 +5583,6 @@
 
 
   /**
-   * With a known queue id, a queue item can be removed.
-   *
-   *  @param queue_id
-   *  @return - the data from the api
-  */
-  var deleteQueue = function (queue_id, callback) {
-
-    params = {};
-    params.queue_id = queue_id;
-    
-    doCurl("/queue",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Retrieve queue items.
    *
    *  @param limit
@@ -5508,6 +5594,23 @@
     params = {};
     params.limit = limit;
     params.queue_name = queue_name;
+    
+    doCurl("/queue",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * With a known queue id, a queue item can be removed.
+   *
+   *  @param queue_id
+   *  @return - the data from the api
+  */
+  var deleteQueue = function (queue_id, callback) {
+
+    params = {};
+    params.queue_id = queue_id;
     
     doCurl("/queue",params,function(error,body){
       callback(error,body);
@@ -5780,6 +5883,25 @@
     params.reseller_masheryid = reseller_masheryid;
     
     doCurl("/sales_log/syndication",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Converts an Entity into a submission at the Scoot Partner API
+   *
+   *  @param entity_id - The entity to parse
+   *  @param reseller - The reseller Mashery ID
+   *  @return - the data from the api
+  */
+  var postScoot_priority = function (entity_id, reseller, callback) {
+
+    params = {};
+    params.entity_id = entity_id;
+    params.reseller = reseller;
+    
+    doCurl("/scoot_priority",params,function(error,body){
       callback(error,body);
     })
   }
@@ -6124,6 +6246,23 @@
 
 
   /**
+   * Returns a Syndication Submission
+   *
+   *  @param syndication_submission_id
+   *  @return - the data from the api
+  */
+  var getSyndication_submission = function (syndication_submission_id, callback) {
+
+    params = {};
+    params.syndication_submission_id = syndication_submission_id;
+    
+    doCurl("/syndication_submission",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Creates a new Syndication Submission
    *
    *  @param syndication_type
@@ -6139,23 +6278,6 @@
     params.entity_id = entity_id;
     params.publisher_id = publisher_id;
     params.submission_id = submission_id;
-    
-    doCurl("/syndication_submission",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Returns a Syndication Submission
-   *
-   *  @param syndication_submission_id
-   *  @return - the data from the api
-  */
-  var getSyndication_submission = function (syndication_submission_id, callback) {
-
-    params = {};
-    params.syndication_submission_id = syndication_submission_id;
     
     doCurl("/syndication_submission",params,function(error,body){
       callback(error,body);
@@ -6330,6 +6452,29 @@
 
 
   /**
+   * Get a tokenised url for an email verification
+   *
+   *  @param email - Email address
+   *  @param flatpack_id - The id of the flatpack site where the request originated
+   *  @param entity_id
+   *  @param action
+   *  @return - the data from the api
+  */
+  var getTokenLoginSet_password = function (email, flatpack_id, entity_id, action, callback) {
+
+    params = {};
+    params.email = email;
+    params.flatpack_id = flatpack_id;
+    params.entity_id = entity_id;
+    params.action = action;
+    
+    doCurl("/token/login/set_password",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Fetch token for messaging path
    *
    *  @param entity_id - The id of the entity being messaged
@@ -6347,52 +6492,6 @@
     params.flatpack_id = flatpack_id;
     
     doCurl("/token/message",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Get a tokenised url for the password reset page
-   *
-   *  @param user_id - The id of the user that originated the request
-   *  @param flatpack_id - The id of the flatpack site where the request originated
-   *  @param portal_name - The portal name
-   *  @param language - en, es, etc...
-   *  @return - the data from the api
-  */
-  var getTokenPassword_reset = function (user_id, flatpack_id, portal_name, language, callback) {
-
-    params = {};
-    params.user_id = user_id;
-    params.flatpack_id = flatpack_id;
-    params.portal_name = portal_name;
-    params.language = language;
-    
-    doCurl("/token/password_reset",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Get a tokenised url for the password verification page
-   *
-   *  @param user_id - The id of the user that originated the request
-   *  @param flatpack_id - The id of the flatpack site where the request originated
-   *  @param portal_name - The portal name
-   *  @param language - en, es, etc...
-   *  @return - the data from the api
-  */
-  var getTokenPassword_verify = function (user_id, flatpack_id, portal_name, language, callback) {
-
-    params = {};
-    params.user_id = user_id;
-    params.flatpack_id = flatpack_id;
-    params.portal_name = portal_name;
-    params.language = language;
-    
-    doCurl("/token/password_verify",params,function(error,body){
       callback(error,body);
     })
   }
@@ -7497,6 +7596,40 @@
 
 
   /**
+   * Deleting a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  var deleteTraction = function (traction_id, callback) {
+
+    params = {};
+    params.traction_id = traction_id;
+    
+    doCurl("/traction",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Fetching a traction
+   *
+   *  @param traction_id
+   *  @return - the data from the api
+  */
+  var getTraction = function (traction_id, callback) {
+
+    params = {};
+    params.traction_id = traction_id;
+    
+    doCurl("/traction",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
    * Update/Add a traction
    *
    *  @param traction_id
@@ -7540,40 +7673,6 @@
 
 
   /**
-   * Deleting a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  var deleteTraction = function (traction_id, callback) {
-
-    params = {};
-    params.traction_id = traction_id;
-    
-    doCurl("/traction",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Fetching a traction
-   *
-   *  @param traction_id
-   *  @return - the data from the api
-  */
-  var getTraction = function (traction_id, callback) {
-
-    params = {};
-    params.traction_id = traction_id;
-    
-    doCurl("/traction",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
    * Fetching active tractions
    *
    *  @return - the data from the api
@@ -7583,6 +7682,23 @@
     params = {};
     
     doCurl("/traction/active",params,function(error,body){
+      callback(error,body);
+    })
+  }
+
+
+  /**
+   * Given a transaction_id retrieve information on it
+   *
+   *  @param transaction_id
+   *  @return - the data from the api
+  */
+  var getTransaction = function (transaction_id, callback) {
+
+    params = {};
+    params.transaction_id = transaction_id;
+    
+    doCurl("/transaction",params,function(error,body){
       callback(error,body);
     })
   }
@@ -7608,23 +7724,6 @@
     params.basket = basket;
     params.currency = currency;
     params.notes = notes;
-    
-    doCurl("/transaction",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Given a transaction_id retrieve information on it
-   *
-   *  @param transaction_id
-   *  @return - the data from the api
-  */
-  var getTransaction = function (transaction_id, callback) {
-
-    params = {};
-    params.transaction_id = transaction_id;
     
     doCurl("/transaction",params,function(error,body){
       callback(error,body);
@@ -7743,10 +7842,9 @@
    *  @param reseller_admin_masheryid
    *  @param group_id
    *  @param admin_upgrader
-   *  @param password
    *  @return - the data from the api
   */
-  var postUser = function (email, user_id, first_name, last_name, active, trust, creation_date, user_type, social_network, social_network_id, reseller_admin_masheryid, group_id, admin_upgrader, password, callback) {
+  var postUser = function (email, user_id, first_name, last_name, active, trust, creation_date, user_type, social_network, social_network_id, reseller_admin_masheryid, group_id, admin_upgrader, callback) {
 
     params = {};
     params.email = email;
@@ -7762,7 +7860,6 @@
     params.reseller_admin_masheryid = reseller_admin_masheryid;
     params.group_id = group_id;
     params.admin_upgrader = admin_upgrader;
-    params.password = password;
     
     doCurl("/user",params,function(error,body){
       callback(error,body);
@@ -7835,25 +7932,6 @@
     params.group_id = group_id;
     
     doCurl("/user/by_groupid",params,function(error,body){
-      callback(error,body);
-    })
-  }
-
-
-  /**
-   * Get a user by an email address but only return if password supplied is correct
-   *
-   *  @param email_address
-   *  @param password
-   *  @return - the data from the api
-  */
-  var getUserBy_password = function (email_address, password, callback) {
-
-    params = {};
-    params.email_address = email_address;
-    params.password = password;
-    
-    doCurl("/user/by_password",params,function(error,body){
       callback(error,body);
     })
   }
@@ -8013,8 +8091,8 @@
     getActivity_stream: getActivity_stream,
     getAdvertiserUpdated: getAdvertiserUpdated,
     getAdvertiserUpdatedBy_publisher: getAdvertiserUpdatedBy_publisher,
-    deleteAssociation: deleteAssociation,
     postAssociation: postAssociation,
+    deleteAssociation: deleteAssociation,
     getAssociation: getAssociation,
     getAutocompleteCategory: getAutocompleteCategory,
     getAutocompleteKeyword: getAutocompleteKeyword,
@@ -8023,9 +8101,9 @@
     putBusiness: putBusiness,
     putBusinessJson: putBusinessJson,
     postBusinessJsonProcess: postBusinessJsonProcess,
+    postBusiness_tool: postBusiness_tool,
     getBusiness_tool: getBusiness_tool,
     deleteBusiness_tool: deleteBusiness_tool,
-    postBusiness_tool: postBusiness_tool,
     getBusiness_toolBy_masheryid: getBusiness_toolBy_masheryid,
     postBusiness_toolImage: postBusiness_toolImage,
     getCategory: getCategory,
@@ -8046,12 +8124,12 @@
     postContractPaymentSetup: postContractPaymentSetup,
     postContractPaymentSuccess: postContractPaymentSuccess,
     postContractProvision: postContractProvision,
-    postContract_log: postContract_log,
     getContract_log: getContract_log,
+    postContract_log: postContract_log,
     getContract_logBy_contract_id: getContract_logBy_contract_id,
     getContract_logBy_payment_provider: getContract_logBy_payment_provider,
-    postCountry: postCountry,
     getCountry: getCountry,
+    postCountry: postCountry,
     getCrash_report: getCrash_report,
     postEmail: postEmail,
     getEntity: getEntity,
@@ -8067,10 +8145,10 @@
     getEntityAdvertisers: getEntityAdvertisers,
     deleteEntityAffiliate_adblock: deleteEntityAffiliate_adblock,
     postEntityAffiliate_adblock: postEntityAffiliate_adblock,
-    postEntityAffiliate_link: postEntityAffiliate_link,
     deleteEntityAffiliate_link: deleteEntityAffiliate_link,
-    deleteEntityAssociation_membership: deleteEntityAssociation_membership,
+    postEntityAffiliate_link: postEntityAffiliate_link,
     postEntityAssociation_membership: postEntityAssociation_membership,
+    deleteEntityAssociation_membership: deleteEntityAssociation_membership,
     postEntityBackground: postEntityBackground,
     postEntityBulkCsv: postEntityBulkCsv,
     getEntityBulkCsvStatus: getEntityBulkCsvStatus,
@@ -8080,8 +8158,8 @@
     deleteEntityBy_supplier: deleteEntityBy_supplier,
     getEntityBy_supplier_id: getEntityBy_supplier_id,
     getEntityBy_user_id: getEntityBy_user_id,
-    postEntityCategory: postEntityCategory,
     deleteEntityCategory: deleteEntityCategory,
+    postEntityCategory: postEntityCategory,
     getEntityChangelog: getEntityChangelog,
     postEntityClaim: postEntityClaim,
     postEntityClaimCancel: postEntityClaimCancel,
@@ -8089,8 +8167,8 @@
     postEntityClaimReseller: postEntityClaimReseller,
     deleteEntityDescription: deleteEntityDescription,
     postEntityDescription: postEntityDescription,
-    postEntityDocument: postEntityDocument,
     deleteEntityDocument: deleteEntityDocument,
+    postEntityDocument: postEntityDocument,
     postEntityEmail: postEntityEmail,
     deleteEntityEmail: deleteEntityEmail,
     deleteEntityEmployee: deleteEntityEmployee,
@@ -8102,26 +8180,26 @@
     postEntityGeopoint: postEntityGeopoint,
     deleteEntityGroup: deleteEntityGroup,
     postEntityGroup: postEntityGroup,
-    postEntityImage: postEntityImage,
     deleteEntityImage: deleteEntityImage,
+    postEntityImage: postEntityImage,
     postEntityImageBy_url: postEntityImageBy_url,
-    deleteEntityInvoice_address: deleteEntityInvoice_address,
     postEntityInvoice_address: postEntityInvoice_address,
-    postEntityList: postEntityList,
+    deleteEntityInvoice_address: deleteEntityInvoice_address,
     deleteEntityList: deleteEntityList,
+    postEntityList: postEntityList,
     getEntityList_by_group_id: getEntityList_by_group_id,
-    postEntityLogo: postEntityLogo,
     deleteEntityLogo: deleteEntityLogo,
+    postEntityLogo: postEntityLogo,
     postEntityLogoBy_url: postEntityLogoBy_url,
     postEntityMerge: postEntityMerge,
     postEntityMigrate_category: postEntityMigrate_category,
     postEntityName: postEntityName,
     deleteEntityOpening_times: deleteEntityOpening_times,
     postEntityOpening_times: postEntityOpening_times,
-    postEntityPayment_type: postEntityPayment_type,
     deleteEntityPayment_type: deleteEntityPayment_type,
-    deleteEntityPhone: deleteEntityPhone,
+    postEntityPayment_type: postEntityPayment_type,
     postEntityPhone: postEntityPhone,
+    deleteEntityPhone: deleteEntityPhone,
     postEntityPostal_address: postEntityPostal_address,
     getEntityProvisionalBy_supplier_id: getEntityProvisionalBy_supplier_id,
     postEntityPurge: postEntityPurge,
@@ -8146,8 +8224,8 @@
     postEntitySpecial_offer: postEntitySpecial_offer,
     deleteEntitySpecial_offer: deleteEntitySpecial_offer,
     postEntityStatus: postEntityStatus,
-    deleteEntityTag: deleteEntityTag,
     postEntityTag: postEntityTag,
+    deleteEntityTag: deleteEntityTag,
     deleteEntityTestimonial: deleteEntityTestimonial,
     postEntityTestimonial: postEntityTestimonial,
     getEntityUncontribute: getEntityUncontribute,
@@ -8155,14 +8233,14 @@
     postEntityUser_trust: postEntityUser_trust,
     deleteEntityVideo: deleteEntityVideo,
     postEntityVideoYoutube: postEntityVideoYoutube,
-    postEntityWebsite: postEntityWebsite,
     deleteEntityWebsite: deleteEntityWebsite,
-    deleteEntityYext_list: deleteEntityYext_list,
+    postEntityWebsite: postEntityWebsite,
     postEntityYext_list: postEntityYext_list,
+    deleteEntityYext_list: deleteEntityYext_list,
     putEntityserve: putEntityserve,
-    getFlatpack: getFlatpack,
     deleteFlatpack: deleteFlatpack,
     postFlatpack: postFlatpack,
+    getFlatpack: getFlatpack,
     postFlatpackAdminCSS: postFlatpackAdminCSS,
     postFlatpackAdminHDLogo: postFlatpackAdminHDLogo,
     postFlatpackAdminLargeLogo: postFlatpackAdminLargeLogo,
@@ -8181,9 +8259,9 @@
     postFlatpackLogo: postFlatpackLogo,
     postFlatpackLogoHd: postFlatpackLogoHd,
     postFlatpackSitemap: postFlatpackSitemap,
-    postGroup: postGroup,
-    deleteGroup: deleteGroup,
     getGroup: getGroup,
+    deleteGroup: deleteGroup,
+    postGroup: postGroup,
     getGroupAll: getGroupAll,
     postGroupBulk_delete: postGroupBulk_delete,
     postGroupBulk_ingest: postGroupBulk_ingest,
@@ -8199,8 +8277,13 @@
     getLocation: getLocation,
     getLocationContext: getLocationContext,
     getLocationMultiple: getLocationMultiple,
-    getLogo: getLogo,
+    postLogin: postLogin,
+    getLogin: getLogin,
+    deleteLogin: deleteLogin,
+    getLoginBy_email: getLoginBy_email,
+    getLoginVerify: getLoginVerify,
     putLogo: putLogo,
+    getLogo: getLogo,
     getLookupCategory: getLookupCategory,
     getLookupLegacyCategory: getLookupLegacyCategory,
     getLookupLocation: getLookupLocation,
@@ -8210,8 +8293,8 @@
     deleteMatching_instruction: deleteMatching_instruction,
     getMatching_instructionAll: getMatching_instructionAll,
     putMatching_log: putMatching_log,
-    postMessage: postMessage,
     getMessage: getMessage,
+    postMessage: postMessage,
     getMessageBy_ses_id: getMessageBy_ses_id,
     getMultipack: getMultipack,
     postMultipack: postMultipack,
@@ -8222,13 +8305,13 @@
     getMultipackLess: getMultipackLess,
     postMultipackLogo: postMultipackLogo,
     postMultipackMap_pin: postMultipackMap_pin,
-    postOps_log: postOps_log,
     getOps_log: getOps_log,
+    postOps_log: postOps_log,
     deletePrivate_object: deletePrivate_object,
     putPrivate_object: putPrivate_object,
     getPrivate_objectAll: getPrivate_objectAll,
-    getProduct: getProduct,
     postProduct: postProduct,
+    getProduct: getProduct,
     deleteProductProvisioning: deleteProductProvisioning,
     postProductProvisioningAdvert: postProductProvisioningAdvert,
     postProductProvisioningClaim: postProductProvisioningClaim,
@@ -8239,14 +8322,14 @@
     getPtbModule: getPtbModule,
     getPtbRunrate: getPtbRunrate,
     getPtbValueadded: getPtbValueadded,
+    getPublisher: getPublisher,
     deletePublisher: deletePublisher,
     postPublisher: postPublisher,
-    getPublisher: getPublisher,
     getPublisherByCountry: getPublisherByCountry,
     getPublisherByEntityId: getPublisherByEntityId,
     putQueue: putQueue,
-    deleteQueue: deleteQueue,
     getQueue: getQueue,
+    deleteQueue: deleteQueue,
     getQueueBy_id: getQueueBy_id,
     postQueueError: postQueueError,
     getQueueSearch: getQueueSearch,
@@ -8259,6 +8342,7 @@
     getSales_logBy_date: getSales_logBy_date,
     postSales_logEntity: postSales_logEntity,
     postSales_logSyndication: postSales_logSyndication,
+    postScoot_priority: postScoot_priority,
     putShortenurl: putShortenurl,
     getShortenurl: getShortenurl,
     postSignal: postSignal,
@@ -8275,8 +8359,8 @@
     postSyndication_log: postSyndication_log,
     getSyndication_logBy_entity_id: getSyndication_logBy_entity_id,
     getSyndication_logLast_syndicated_id: getSyndication_logLast_syndicated_id,
-    putSyndication_submission: putSyndication_submission,
     getSyndication_submission: getSyndication_submission,
+    putSyndication_submission: putSyndication_submission,
     postSyndication_submissionDeactivate: postSyndication_submissionDeactivate,
     postSyndication_submissionProcessed: postSyndication_submissionProcessed,
     getTokenAdd: getTokenAdd,
@@ -8285,9 +8369,8 @@
     getTokenDecode: getTokenDecode,
     getTokenEdit: getTokenEdit,
     getTokenLogin: getTokenLogin,
+    getTokenLoginSet_password: getTokenLoginSet_password,
     getTokenMessage: getTokenMessage,
-    getTokenPassword_reset: getTokenPassword_reset,
-    getTokenPassword_verify: getTokenPassword_verify,
     getTokenProduct: getTokenProduct,
     getTokenProduct_selector: getTokenProduct_selector,
     getTokenReport: getTokenReport,
@@ -8342,12 +8425,12 @@
     getToolsUrl_details: getToolsUrl_details,
     getToolsValidate_email: getToolsValidate_email,
     getToolsValidate_phone: getToolsValidate_phone,
-    postTraction: postTraction,
     deleteTraction: deleteTraction,
     getTraction: getTraction,
+    postTraction: postTraction,
     getTractionActive: getTractionActive,
-    putTransaction: putTransaction,
     getTransaction: getTransaction,
+    putTransaction: putTransaction,
     postTransactionAuthorised: postTransactionAuthorised,
     getTransactionBy_paypal_transaction_id: getTransactionBy_paypal_transaction_id,
     postTransactionCancelled: postTransactionCancelled,
@@ -8358,7 +8441,6 @@
     getUserAllowed_to_edit: getUserAllowed_to_edit,
     getUserBy_email: getUserBy_email,
     getUserBy_groupid: getUserBy_groupid,
-    getUserBy_password: getUserBy_password,
     getUserBy_reseller_admin_masheryid: getUserBy_reseller_admin_masheryid,
     getUserBy_social_media: getUserBy_social_media,
     postUserDowngrade: postUserDowngrade,
