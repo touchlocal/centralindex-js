@@ -3684,9 +3684,11 @@
    *  @param linkToRoot - The root domain name to serve this flatpack site on (no leading http:// or anything please)
    *  @param termsLink - A URL for t's and c's specific to this partner
    *  @param serpNumberEmbedAdverts - The number of embed adverts per search
+   *  @param serpEmbedTitle - Custom page title for emdedded searches
+   *  @param adminLess - the LESS configuration to use to overrides the Bootstrap CSS for the admin on themed domains
    *  @return - the data from the api
   */
-  var postFlatpack = function (flatpack_id, domainName, stub, flatpackName, less, language, country, mapsType, mapKey, searchFormShowOn, searchFormShowKeywordsBox, searchFormShowLocationBox, searchFormKeywordsAutoComplete, searchFormLocationsAutoComplete, searchFormDefaultLocation, searchFormPlaceholderKeywords, searchFormPlaceholderLocation, searchFormKeywordsLabel, searchFormLocationLabel, cannedLinksHeader, homepageTitle, homepageDescription, homepageIntroTitle, homepageIntroText, head, adblock, bodyTop, bodyBottom, header_menu, header_menu_bottom, footer_menu, bdpTitle, bdpDescription, bdpAds, serpTitle, serpDescription, serpNumberResults, serpNumberAdverts, serpAds, serpAdsBottom, serpTitleNoWhat, serpDescriptionNoWhat, cookiePolicyUrl, cookiePolicyNotice, addBusinessButtonText, twitterUrl, facebookUrl, copyright, phoneReveal, loginLinkText, contextLocationId, addBusinessButtonPosition, denyIndexing, contextRadius, activityStream, activityStreamSize, products, linkToRoot, termsLink, serpNumberEmbedAdverts, callback) {
+  var postFlatpack = function (flatpack_id, domainName, stub, flatpackName, less, language, country, mapsType, mapKey, searchFormShowOn, searchFormShowKeywordsBox, searchFormShowLocationBox, searchFormKeywordsAutoComplete, searchFormLocationsAutoComplete, searchFormDefaultLocation, searchFormPlaceholderKeywords, searchFormPlaceholderLocation, searchFormKeywordsLabel, searchFormLocationLabel, cannedLinksHeader, homepageTitle, homepageDescription, homepageIntroTitle, homepageIntroText, head, adblock, bodyTop, bodyBottom, header_menu, header_menu_bottom, footer_menu, bdpTitle, bdpDescription, bdpAds, serpTitle, serpDescription, serpNumberResults, serpNumberAdverts, serpAds, serpAdsBottom, serpTitleNoWhat, serpDescriptionNoWhat, cookiePolicyUrl, cookiePolicyNotice, addBusinessButtonText, twitterUrl, facebookUrl, copyright, phoneReveal, loginLinkText, contextLocationId, addBusinessButtonPosition, denyIndexing, contextRadius, activityStream, activityStreamSize, products, linkToRoot, termsLink, serpNumberEmbedAdverts, serpEmbedTitle, adminLess, callback) {
 
     params = {};
     params.flatpack_id = flatpack_id;
@@ -3749,6 +3751,8 @@
     params.linkToRoot = linkToRoot;
     params.termsLink = termsLink;
     params.serpNumberEmbedAdverts = serpNumberEmbedAdverts;
+    params.serpEmbedTitle = serpEmbedTitle;
+    params.adminLess = adminLess;
     
     doCurl("/flatpack",params,function(error,body){
       callback(error,body);
