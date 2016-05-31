@@ -2558,14 +2558,16 @@
    *
    *  @param entity_id
    *  @param number
+   *  @param description
    *  @param trackable
    *  @return - the data from the api
   */
-  var postEntityPhone = function (entity_id, number, trackable, callback) {
+  var postEntityPhone = function (entity_id, number, description, trackable, callback) {
 
     params = {};
     params.entity_id = entity_id;
     params.number = number;
+    params.description = description;
     params.trackable = trackable;
     
     doCurl("/entity/phone",params,function(error,body){
