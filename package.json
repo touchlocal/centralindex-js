@@ -15,6 +15,6 @@
   "author": "Glynn Bird",
   "license": "BSD",
   "dependencies": {
-    "request": "2.14.0"
+    "request": "2.88.0"
   }
 }
